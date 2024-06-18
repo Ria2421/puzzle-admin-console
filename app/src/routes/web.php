@@ -6,25 +6,33 @@
 //-------------------------------------------------
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HaveItemController;
+use App\Http\Controllers\ItemController;
+use App\Http\Controllers\PlayerController;
 use Illuminate\Support\Facades\Route;
 
 // ログイン画面の表示
-Route::get('/', [AccountController::class, 'showLogin']);
+Route::get('/', [AuthController::class, 'index'])->name('login');
 
 // ログイン画面の表示
-Route::get('accounts/showLogin', [AccountController::class, 'showLogin']);
+Route::get('authentications/index', [AuthController::class, 'index']);
 
 // ログイン処理
-Route::post('accounts/doLogin', [AccountController::class, 'doLogin']);
+Route::post('authentications/login', [AuthController::class, 'login']);
 
 // ログアウト処理
-Route::post('accounts/doLogout', [AccountController::class, 'doLogout']);
+Route::post('authentications/logout', [AuthController::class, 'logout']);
 
 // アカウントの表示
-Route::get('accounts/showAccount/{account_id?}', [AccountController::class, 'showAccount']);
+Route::get('accounts/index/{account_id?}', [AccountController::class, 'index']);
+Route::post('accounts/searchAccount', [AccountController::class, 'index']);
 
-// アイテムの表示
-Route::get('accounts/showItem/{item_id?}', [AccountController::class, 'showItem']);
+// プレイヤーの表示
+Route::get('players/index/{player_id?}', [PlayerController::class, 'index']);
 
 // 所持アイテムの表示
-Route::get('accounts/showHaveItem/{player_id?}', [AccountController::class, 'showHaveItem']);
+Route::get('players/haveItems/{player_id?}', [PlayerController::class, 'showHaveItem']);
+
+// アイテムの表示
+Route::get('items/index/{item_id?}', [ItemController::class, 'index']);

@@ -1,5 +1,5 @@
 <!--------------------------------------------
-// ログイン画面 [login.blade.php]
+// ログイン画面 [haveItems.blade.php]
 // Author:Kenta Nakamoto
 // Data:2024/06/10
 //-------------------------------------------->
@@ -14,13 +14,16 @@
 </head>
 <body class="text-center">
 
-<form class="form-signin" method="POST" action="{{url('accounts/doLogin')}}">
+<form class="form-signin" method="POST" action="{{url('authentications/login')}}">
     @csrf
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
-    @if(isset($error))
-        <div style="color: red">{{$error}}</div>
-        <br>
+    @if($errors->any())
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
     @endif
 
     <label for="inputEmail" class="sr-only">アカウント名</label>
