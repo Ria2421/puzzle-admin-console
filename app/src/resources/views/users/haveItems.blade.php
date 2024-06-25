@@ -19,16 +19,22 @@
         class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="../accounts/index" class="nav-link px-2">Accounts</a></li>
-            <li><a href="../players/index" class="nav-link px-2">Players</a></li>
-            <li><a href="../items/index" class="nav-link px-2">Items</a></li>
-            <li><a href="../players/haveItems" class="nav-link px-2 link-secondary">Player Items</a></li>
+            <li>
+                <form method="GET" action="{{route('accounts.create')}}">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-primary me-2">登録</button>
+                </form>
+            </li>
+            <li><a href="{{route('accounts.index')}}" class="nav-link px-2">アカウント</a></li>
+            <li><a href="{{route('users.index')}}" class="nav-link px-2">ユーザー</a></li>
+            <li><a href="{{route('items.index')}}" class="nav-link px-2">アイテム</a></li>
+            <li><a href="{{route('users.showItem')}}" class="nav-link px-2 link-secondary">持ち物リスト</a></li>
         </ul>
 
         <div class="col-md-3 text-end">
-            <form method="POST" action="{{url('authentications/logout')}}">
+            <form method="POST" action="{{route('auth.logout')}}">
                 @csrf
-                <button type="submit" class="btn btn-outline-primary me-2">Logout</button>
+                <button type="submit" class="btn btn-outline-primary me-2">ログアウト</button>
             </form>
         </div>
 
@@ -39,28 +45,18 @@
     <h3 class="display-5">▼ 所持アイテム一覧 ▼</h3>
 </div>
 
-<!--検索
-<div class="text-center">
-    <form method="POST" action="index.php">
-        <input type="text" name="id" placeholder="IDを入力">
-        <input type="submit" value="検索">
-        <input type="hidden" name="action" value="searchPlayerItem">
-    </form>
-</div>
--->
-
 <table class="table table-bordered mx-auto p-2" style="width: 60%">
     <tr>
-        <th>プレイヤーID</th>
-        <th>プレイヤー名</th>
+        <th>ユーザーID</th>
+        <th>ユーザー名</th>
         <th>アイテム名</th>
         <th>所持個数</th>
     </tr>
 
     @foreach($haveItems as $haveItem)
         <tr>
-            <td>{{$haveItem['player_id']}}</td>
-            <td>{{$haveItem['player_name']}}</td>
+            <td>{{$haveItem['user_id']}}</td>
+            <td>{{$haveItem['user_name']}}</td>
             <td>{{$haveItem['item_name']}}</td>
             <td>{{$haveItem['quantity']}}</td>
         </tr>

@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 use App\Models\Account;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -17,23 +18,30 @@ class AuthController extends Controller
     public function index(Request $request)
     {
         // ログインしてるかチェック
-        if ($request->session()->exists('login')) {
-            return redirect('accounts/index');
-        } else {
-            return view('authentications/index');
-        }
+        return view('authentications/index', ['error' => $request['error'] ?? null]);
     }
 
     // ログイン処理
     public function login(Request $request)
     {
-        $validated = $request->validate([
-            'name' => ['required', 'min:4', 'max:20'],
-            'password' => ['required'],
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'min:4'],
+            'password' => 'required',
         ]);
+
+        if ($validator->fails()) {
+            return redirect("/")
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         // DBから指定のアカウント情報を取得
         $account = Account::where('name', '=', $request->name)->get();
+
+        if ($account->count() == 0) {
+            // エラー表示
+            return redirect()->route('auth.index', ['error' => 'invalid']);
+        }
 
         if (Hash::check($request->password, $account[0]->password)) {
             // 一致した時
@@ -41,12 +49,12 @@ class AuthController extends Controller
             // セッションにログイン情報を登録
             $request->session()->put('login', true);
             // 一覧表示
-            return redirect('accounts/index');
+            return redirect()->route('accounts.index');
         } else {
             // 一致しなかった時
 
             // エラー表示
-            return redirect('login', ['error' => 'invalid']);
+            return redirect()->route('accounts.index', ['error' => 'invalid']);
         }
     }
 
@@ -57,6 +65,6 @@ class AuthController extends Controller
         $request->session()->forget('login');
 
         // ログイン画面にリダイレクト
-        return redirect('authentications/index');
+        return redirect()->route('auth.index');
     }
 }

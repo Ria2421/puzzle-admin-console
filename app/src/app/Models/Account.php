@@ -12,8 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Account extends Model
 {
-    use HasFactory;
-
     // 更新しないカラムを指定 (idはauto_incrementの為)
     protected $guarded = [
         'id',

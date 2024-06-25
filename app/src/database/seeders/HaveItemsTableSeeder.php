@@ -13,8 +13,8 @@ class HaveItemsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        HaveItem::create(['player_id' => 1, 'item_id' => '1', 'quantity' => 10]);
-        HaveItem::create(['player_id' => 2, 'item_id' => '3', 'quantity' => 4]);
-        HaveItem::create(['player_id' => 3, 'item_id' => '4', 'quantity' => 1]);
+        HaveItem::create(['user_id' => 1, 'item_id' => 1, 'quantity' => 10]);
+        HaveItem::create(['user_id' => 2, 'item_id' => 3, 'quantity' => 4]);
+        HaveItem::create(['user_id' => 3, 'item_id' => 4, 'quantity' => 1]);
     }
 }

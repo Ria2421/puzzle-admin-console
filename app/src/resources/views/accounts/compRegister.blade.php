@@ -1,7 +1,7 @@
 <!--------------------------------------------
-// アイテム一覧画面 [item.blade.php]
+// 登録完了画面 [compRegister.blade.php]
 // Author:Kenta Nakamoto
-// Data:2024/06/11
+// Data:2024/06/24
 //-------------------------------------------->
 
 <!DOCTYPE html>
@@ -27,12 +27,12 @@
             </li>
             <li><a href="{{route('accounts.index')}}" class="nav-link px-2">アカウント</a></li>
             <li><a href="{{route('users.index')}}" class="nav-link px-2">ユーザー</a></li>
-            <li><a href="{{route('items.index')}}" class="nav-link px-2 link-secondary">アイテム</a></li>
+            <li><a href="{{route('items.index')}}" class="nav-link px-2">アイテム</a></li>
             <li><a href="{{route('users.showItem')}}" class="nav-link px-2">持ち物リスト</a></li>
         </ul>
 
         <div class="col-md-3 text-end">
-            <form method="POST" action="{{route('auth.logout')}}">
+            <form method="POST" action="{{route('accounts.create')}}">
                 @csrf
                 <button type="submit" class="btn btn-outline-primary me-2">ログアウト</button>
             </form>
@@ -42,35 +42,12 @@
 </div>
 
 <div class="container text-center bg-primary-subtle" style="width: 500px">
-    <h3 class="display-5">▼ アイテム一覧 ▼</h3>
+    <h3 class="display-5">▼ アカウント登録 ▼</h3>
 </div>
-
-<table class="table table-bordered mx-auto p-2" style="width: 60%">
-    <tr>
-        <th>ID</th>
-        <th>名前</th>
-        <th>種別</th>
-        <th>効果値</th>
-        <th>説明</th>
-    </tr>
-
-    @foreach($items as $item)
-        <tr>
-            <td>{{$item['id']}}</td>
-            <td>{{$item['name']}}</td>
-
-            @if($item['type'] === 1)
-                <td>消耗品</td>
-            @elseif($item['type'] === 2)
-                <td>装備品</td>
-            @endif
-
-            <td>{{$item['effect_value']}}</td>
-            <td>{{$item['text']}}</td>
-        </tr>
-    @endforeach
-
-</table>
+<div class="text-center">
+    <br>
+    [ {{$name}} ]の登録が完了しました。
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"

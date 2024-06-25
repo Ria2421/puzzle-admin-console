@@ -1,5 +1,5 @@
 <!--------------------------------------------
-// アカウント一覧画面 [player.blade.php]
+// アカウント一覧画面 [user.blade.php]
 // Author:Kenta Nakamoto
 // Data:2024/06/11
 //-------------------------------------------->
@@ -20,14 +20,20 @@
         class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="../accounts/index" class="nav-link px-2 link-secondary">Accounts</a></li>
-            <li><a href="../players/index" class="nav-link px-2">Players</a></li>
-            <li><a href="../items/index" class="nav-link px-2">Items</a></li>
-            <li><a href="../players/haveItems" class="nav-link px-2">Player Items</a></li>
+            <li>
+                <form method="GET" action="{{route('accounts.create')}}">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-primary me-2">登録</button>
+                </form>
+            </li>
+            <li><a href="{{route('accounts.index')}}" class="nav-link px-2 link-secondary">アカウント</a></li>
+            <li><a href="{{route('users.index')}}" class="nav-link px-2">ユーザー</a></li>
+            <li><a href="{{route('items.index')}}" class="nav-link px-2">アイテム</a></li>
+            <li><a href="{{route('users.showItem')}}" class="nav-link px-2">持ち物リスト</a></li>
         </ul>
 
         <div class="col-md-3 text-end">
-            <form method="POST" action="{{url('authentications/logout')}}">
+            <form method="POST" action="{{route('auth.logout')}}">
                 @csrf
                 <button type="submit" class="btn btn-outline-primary me-2">Logout</button>
             </form>
@@ -43,7 +49,7 @@
 
 <!--検索-->
 <div class="text-center">
-    <form method="POST" action="{{url('accounts/searchAccount')}}">
+    <form method="POST" action="{{route('accounts.show')}}">
         @csrf
         <input type="text" name="id" placeholder="IDを入力">
         <input type="submit" value="検索">
@@ -59,6 +65,7 @@
         <th>パスワード</th>
         <th>生成日時</th>
         <th>更新日時</th>
+        <th>操作</th>
     </tr>
 
     @foreach($accounts as $account)
@@ -68,9 +75,12 @@
             <td>{{$account['password']}}</td>
             <td>{{$account['created_at']}}</td>
             <td>{{$account['updated_at']}}</td>
+            <td width="140px">
+                <a href="{{ route('accounts.destroyConf', ['id'=>$account['id']]) }}" class="btn btn-danger">削除</a>
+                <a href="{{ route('accounts.showUpdate', ['id'=>$account['id']]) }}" class="btn btn-success">更新</a>
+            </td>
         </tr>
     @endforeach
-
 
 </table>
 

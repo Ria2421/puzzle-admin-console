@@ -1,5 +1,5 @@
 <!--------------------------------------------
-// アカウント一覧画面 [player.blade.php]
+// アカウント一覧画面 [user.blade.php]
 // Author:Kenta Nakamoto
 // Data:2024/06/11
 //-------------------------------------------->
@@ -20,16 +20,22 @@
         class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="../accounts/index" class="nav-link px-2">Accounts</a></li>
-            <li><a href="../players/index" class="nav-link px-2  link-secondary">Players</a></li>
-            <li><a href="../items/index" class="nav-link px-2">Items</a></li>
-            <li><a href="../players/haveItems" class="nav-link px-2">Player Items</a></li>
+            <li>
+                <form method="GET" action="{{route('accounts.create')}}">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-primary me-2">登録</button>
+                </form>
+            </li>
+            <li><a href="{{route('accounts.index')}}" class="nav-link px-2">アカウント</a></li>
+            <li><a href="{{route('users.index')}}" class="nav-link px-2  link-secondary">ユーザー</a></li>
+            <li><a href="{{route('items.index')}}" class="nav-link px-2">アイテム</a></li>
+            <li><a href="{{route('users.showItem')}}" class="nav-link px-2">持ち物リスト</a></li>
         </ul>
 
         <div class="col-md-3 text-end">
-            <form method="POST" action="{{url('authentications/logout')}}">
+            <form method="POST" action="{{route('auth.logout')}}">
                 @csrf
-                <button type="submit" class="btn btn-outline-primary me-2">Logout</button>
+                <button type="submit" class="btn btn-outline-primary me-2">ログアウト</button>
             </form>
         </div>
 
@@ -38,18 +44,8 @@
 
 <!-- 表示内容 -->
 <div class="container text-center bg-primary-subtle" style="width: 500px">
-    <h3 class="display-5">▼ プレイヤー一覧 ▼</h3>
+    <h3 class="display-5">▼ ユーザー一覧 ▼</h3>
 </div>
-
-<!--検索
-<div class="text-center">
-    <form method="POST" action="index.php">
-        <input type="text" name="name" placeholder="名前を入力">
-        <input type="submit" value="検索">
-        <input type="hidden" name="action" value="searchPlayer">
-    </form>
-</div>
--->
 
 <br>
 
@@ -62,13 +58,13 @@
         <th>ライフ</th>
     </tr>
 
-    @foreach($players as $player)
+    @foreach($users as $user)
         <tr>
-            <td>{{$player['id']}}</td>
-            <td>{{$player['name']}}</td>
-            <td>{{$player['level']}}</td>
-            <td>{{$player['exp']}}</td>
-            <td>{{$player['life']}}</td>
+            <td>{{$user['id']}}</td>
+            <td>{{$user['name']}}</td>
+            <td>{{$user['level']}}</td>
+            <td>{{$user['exp']}}</td>
+            <td>{{$user['life']}}</td>
         </tr>
     @endforeach
 

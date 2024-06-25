@@ -9,31 +9,122 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
 {
     public function index(Request $request)
     {
-        // ログインしているかチェック
-        if ($request->session()->exists('login')) {
-            // ログインしている
+        if (isset($request->id)) {
+            // id指定有
+            $data = Account::where('id', '=', $request->id)->get();
 
-            if (isset($request->id)) {
-                // id指定有
-                $data = Account::where('id', '=', $request->id)->get();
-
-            } else {
-                // id指定無
-                $data = Account::All();
-            }
-
-            return view('accounts/index', ['accounts' => $data]);
         } else {
-            // ログインしてない
-
-            // ログイン画面にリダイレクト
-            return redirect('authentications/index');
+            // id指定無
+            $data = Account::All();
         }
+
+        return view('accounts/index', ['accounts' => $data]);
+    }
+
+    // 登録画面の表示
+    public function create(Request $request)
+    {
+        return view('accounts/create', ['error' => $request['error'] ?? null]);
+    }
+
+    // アカウント登録処理
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'min:4'],
+            'password' => ['required', 'confirmed']
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('accounts.create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        // DBから指定のアカウント情報を取得
+        $account = Account::where('name', '=', $request->name)->get();
+
+        if ($account->count() == 0) {
+            // 被りが無ければ作成
+            Account::create(['name' => $request->name, 'password' => Hash::make($request->password)]);
+        } else {
+            // エラー表示
+            return redirect()->route('accounts.create', ['error' => 'invalid']);
+        }
+
+        // 登録完了画面にリダイレクト
+        return redirect()->route('accounts.storeComp', ['name' => $request->name]);
+    }
+
+    // 登録完了画面の表示
+    public function storeComplete(Request $request)
+    {
+        return view('accounts/compRegister', ['name' => $request['name'] ?? null]);
+    }
+
+    // 削除確認画面の表示
+    public function destroyConf(Request $request)
+    {
+        $data = Account::where('id', '=', $request->id)->first();
+        return view('accounts.destroyConf', ['accounts' => $data]);
+    }
+
+    // 削除処理
+    public function destroy(Request $request)
+    {
+        $account = Account::findOrFail($request->id);
+        $account->delete();
+
+        return redirect()->route('accounts.destroyComp', ['name' => $account->name]);
+    }
+
+    // 削除完了画面の表示
+    public function destroyComp(Request $request)
+    {
+        $name = $request->name;
+        return view('accounts.destroyComp', ['name' => $name]);
+    }
+
+    // 更新画面の表示
+    public function showUpdate(Request $request)
+    {
+        $data = Account::where('id', '=', $request->id)->first();
+        return view('accounts.update', ['account' => $data]);
+    }
+
+    // 更新処理
+    public function update(Request $request)
+    {
+        // バリデーションチェック
+        $validator = Validator::make($request->all(), [
+            'password' => ['required', 'confirmed']
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('accounts.showUpdate')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $account = Account::findOrFail($request->id);
+        $account->password = Hash::make($request->password);
+        $account->save();
+
+        return redirect()->route('accounts.updateComp', ['name' => $account->name]);
+    }
+
+    // 更新完了表示
+    public function UpdateComp(Request $request)
+    {
+        $name = $request->name;
+        return view('accounts.updateComp', ['name' => $name]);
     }
 }
 

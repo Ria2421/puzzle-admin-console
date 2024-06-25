@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         // 引数のrunを実行
         $this->call(AccountsTableSeeder::class);
-        $this->call(PlayersTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
         $this->call(ItemsTableSeeder::class);
         $this->call(HaveItemsTableSeeder::class);
     }

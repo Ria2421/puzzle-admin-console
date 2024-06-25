@@ -14,15 +14,21 @@
 </head>
 <body class="text-center">
 
-<form class="form-signin" method="POST" action="{{url('authentications/login')}}">
+<form class="form-signin" method="POST" action="{{route('auth.login')}}">
     @csrf
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <h1 class="h3 mb-3 font-weight-normal">サインイン</h1>
 
     @if($errors->any())
         <ul>
             @foreach($errors->all() as $error)
                 <li>{{$error}}</li>
             @endforeach
+        </ul>
+    @endif
+
+    @if(isset($error))
+        <ul>
+            <li>入力された内容が正しくありません。</li>
         </ul>
     @endif
 
