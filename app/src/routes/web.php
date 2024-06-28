@@ -4,10 +4,10 @@
 // Author:Kenta Nakamoto
 // Data:2024/06/11
 //-------------------------------------------------
-
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -49,4 +49,15 @@ Route::middleware(AuthMiddleware::class)->group(function () {
 
     // アイテムの表示
     Route::get('items/index/{item_id?}', [ItemController::class, 'index'])->name('items.index');
+
+    // メール一覧の表示
+    Route::get('mails/index/{mail_id?}', [MailController::class, 'index'])->name('mails.index');
+    // 指定メールIDの表示
+    Route::post('mails/show', [MailController::class, 'index'])->name('mails.show');
+
+    // メール添付アイテム一覧の表示
+    Route::get('mails/showSendItems', [MailController::class, 'showSendItems'])->name('mails.showSendItems');
+
+    // ユーザー受信メール表示
+    Route::get('mails/showReceiveMails', [MailController::class, 'showReceiveMails'])->name('mails.showReceiveMails');
 });

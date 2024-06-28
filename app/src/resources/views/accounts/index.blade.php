@@ -30,6 +30,9 @@
             <li><a href="{{route('users.index')}}" class="nav-link px-2">ユーザー</a></li>
             <li><a href="{{route('items.index')}}" class="nav-link px-2">アイテム</a></li>
             <li><a href="{{route('users.showItem')}}" class="nav-link px-2">持ち物リスト</a></li>
+            <li><a href="{{route('mails.index')}}" class="nav-link px-2">定型メール</a></li>
+            <li><a href="{{route('mails.showSendItems')}}" class="nav-link px-2">添付アイテムリスト</a></li>
+            <li><a href="{{route('mails.showReceiveMails')}}" class="nav-link px-2">ユーザー受信メール</a></li>
         </ul>
 
         <div class="col-md-3 text-end">
