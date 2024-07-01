@@ -7,9 +7,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use App\Models\Mail;
 use App\Models\ReceiveMails;
 use App\Models\SendItem;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class MailController extends Controller
 {
@@ -78,9 +81,68 @@ class MailController extends Controller
     // メール送信フォームの表示
     public function showSendMail()
     {
-        return view('mails.sendMail');
+        $mails = Mail::All();
+        $items = SendItem::select([
+            'send_items.id as id',
+            'items.name as name',
+            'send_items.quantity as quantity',
+        ])
+            ->join('items', function ($join) {
+                $join->on('send_items.item_id', '=', 'items.id');
+            })
+            ->get();
+
+        return view('mails.sendMail', ['mails' => $mails, 'items' => $items]);
     }
 
     // 送信処理
+    public function sendMail(Request $request)
+    {
+        if ($request->user_id == 0) {
+            /* 全ユーザー指定の場合 */
+            $users = User::All();
+            foreach ($users as $user) {
+                ReceiveMails::create([
+                    'user_id' => $user->id,
+                    'mail_id' => $request->mail_id,
+                    'send_item_id' => $request->send_item_id,
+                    'unsealed_flag' => false
+                ]);
+            }
 
+            return redirect()->route('mails.showSendComp', ['id' => 0]);
+        } else {
+            /* ユーザー指定の場合 */
+
+            // 入力されたユーザーIDが存在するか確認
+            $users = User::find($request->user_id);
+
+            if (isset($users)) {
+                // 指定IDが存在した時
+                ReceiveMails::create([
+                    'user_id' => $request->user_id,
+                    'mail_id' => $request->mail_id,
+                    'send_item_id' => $request->send_item_id,
+                    'unsealed_flag' => false
+                ]);
+
+                return redirect()->route('mails.showSendComp', ['id' => $request->user_id]);
+            } else {
+                // エラー表示
+                return redirect()->route('mails.showSendMail', ['error' => 'invalid']);
+            }
+        }
+    }
+
+    // 送信完了画面
+    public function showSendComp(Request $request)
+    {
+        if ($request->id == 0) {
+            $name = '全ユーザー';
+        } else {
+            $data = User::find($request->id);
+            $name = $data->name;
+        }
+        return view('mails.sendComp', ['name' => $name]);
+    }
 }

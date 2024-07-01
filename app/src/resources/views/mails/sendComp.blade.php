@@ -14,7 +14,7 @@
     </div>
     <div class="text-center">
         <br>
-        メールの送信が完了しました。
+        {{$name}}にメールの送信が完了しました。
     </div>
 
 @endsection

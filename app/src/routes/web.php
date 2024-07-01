@@ -66,6 +66,12 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
 
         // メール送信画面表示
         Route::get('mails/showSendMail', [MailController::class, 'showSendMail'])->name('mails.showSendMail');
+
+        // 送信処理
+        Route::post('mails/sendMail', [MailController::class, 'sendMail'])->name('mails.sendMail');
+
+        // 送信完了画面表示
+        Route::get('mails/showSendComp', [MailController::class, 'showSendComp'])->name('mails.showSendComp');
     });
 });
 

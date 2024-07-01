@@ -16,29 +16,35 @@
 
     <!-- 送信フォーム -->
     <div class="mx-auto p-2" style="width: 400px;">
-        <form method="POST" action="{{route('accounts.show')}}">
+        @if(!empty(request()->get('error')))
+            <div class="text-danger text-center">指定したユーザーIDは存在しません。</div>
+            <br>
+        @endisset
+
+        <form method="POST" action="{{route('mails.sendMail')}}">
             @csrf
-            <div>送信ユーザーIDを選択してください</div>
-            <select name="user_id" class="form-select">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-            </select>
+            <div>送信するユーザーIDを入力してください (0:全ユーザー)</div>
+            <input type="text" name="user_id" class="form-control" required>
+
+            <br>
 
             <div>送信するメール内容を選択してください</div>
             <select name="mail_id" class="form-select">
-                <option>1</option>
-                <option>2</option>
+                @foreach($mails as $mail)
+                    <option value="{{$mail['id']}}">{{$mail['id']}} : {{$mail['title']}}</option>
+                @endforeach
             </select>
+
+            <br>
 
             <div>添付するアイテムを選択してください</div>
             <select name="send_item_id" class="form-select">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
+                @foreach($items as $item)
+                    <option value="{{$item['id']}}">{{$item['id']}} : {{$item['name']}} * {{$item['quantity']}}</option>
+                @endforeach
             </select>
+
+            <br>
 
             <button type="submit" class="btn btn-outline-primary me-2">送信</button>
         </form>
