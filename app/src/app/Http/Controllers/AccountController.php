@@ -22,7 +22,7 @@ class AccountController extends Controller
 
         } else {
             // id指定無
-            $data = Account::All();
+            $data = Account::simplePaginate(10);
         }
 
         return view('accounts/index', ['accounts' => $data]);

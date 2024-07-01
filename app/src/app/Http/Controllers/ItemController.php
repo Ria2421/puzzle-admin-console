@@ -15,7 +15,8 @@ class ItemController extends Controller
     // アイテム一覧の表示
     public function index(Request $request)
     {
-        $data = Item::All();
+        $data = Item::paginate(10);
+        $data->onEachSide(2);
         return view('items/index', ['items' => $data]);
     }
 }

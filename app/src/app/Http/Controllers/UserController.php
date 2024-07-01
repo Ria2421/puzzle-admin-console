@@ -16,7 +16,8 @@ class UserController extends Controller
     // アカウント一覧を表示する
     public function index(Request $request)
     {
-        $data = User::All();
+        $data = User::paginate(10);
+        $data->onEachSide(2);
 
         return view('users/index', ['users' => $data]);
     }
@@ -36,7 +37,8 @@ class UserController extends Controller
             })
             ->join('items', function ($join) {
                 $join->on('have_items.item_id', '=', 'items.id');
-            })->get();
+            })->paginate(10);
+        $data->onEachSide(2);
 
         return view('users/haveItems', ['haveItems' => $data]);
     }

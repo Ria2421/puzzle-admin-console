@@ -18,11 +18,13 @@ class MailController extends Controller
     {
         if (isset($request->id)) {
             // id指定有
-            $data = Mail::where('id', '=', $request->id)->get();
+            $data = Mail::where('id', '=', $request->id)->paginate(10);
+            $data->onEachSide(2);;
 
         } else {
             // id指定無
-            $data = Mail::All();
+            $data = Mail::paginate(10);
+            $data->onEachSide(2);;
         }
 
         return view('mails/index', ['mails' => $data]);
@@ -41,7 +43,9 @@ class MailController extends Controller
         ])
             ->join('items', function ($join) {
                 $join->on('send_items.item_id', '=', 'items.id');
-            })->get();
+            })->paginate(10);
+
+        $data->onEachSide(2);
 
         return view('mails.sendItem', ['items' => $data]);
     }
@@ -65,8 +69,18 @@ class MailController extends Controller
             ->join('mails', function ($join) {
                 $join->on('receive_mails.mail_id', '=', 'mails.id');
             })
-            ->get();
+            ->paginate(10);
+        $data->onEachSide(2);
 
         return view('mails.receive', ['mails' => $data]);
     }
+
+    // メール送信フォームの表示
+    public function showSendMail()
+    {
+        return view('mails.sendMail');
+    }
+
+    // 送信処理
+
 }
