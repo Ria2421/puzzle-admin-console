@@ -47,7 +47,7 @@ class AuthController extends Controller
             // 一致した時
 
             // セッションにログイン情報を登録
-            $request->session()->put('login', true);
+            $request->session()->put('login', $account[0]->id);
             // 一覧表示
             return redirect()->route('accounts.index');
         } else {

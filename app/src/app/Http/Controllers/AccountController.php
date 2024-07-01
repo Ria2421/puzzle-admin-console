@@ -25,7 +25,7 @@ class AccountController extends Controller
             $data = Account::simplePaginate(10);
         }
 
-        return view('accounts/index', ['accounts' => $data]);
+        return view('accounts/index', ['accounts' => $data, 'login' => $request->session()->get('login')]);
     }
 
     // 登録画面の表示

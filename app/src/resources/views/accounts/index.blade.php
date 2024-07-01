@@ -48,8 +48,13 @@
                 <td>{{$account['created_at']}}</td>
                 <td>{{$account['updated_at']}}</td>
                 <td width="140px">
-                    <a href="{{ route('accounts.destroyConf', ['id'=>$account['id']]) }}"
-                       class="btn btn-danger">削除</a>
+                    @if($login == $account['id'])
+                        <a tabindex="-1" class="btn btn-secondary">削除</a>
+                    @else
+                        <a href="{{ route('accounts.destroyConf', ['id'=>$account['id']]) }}"
+                           class="btn btn-danger">削除</a>
+                    @endif
+
                     <a href="{{ route('accounts.showUpdate', ['id'=>$account['id']]) }}"
                        class="btn btn-success">更新</a>
                 </td>
