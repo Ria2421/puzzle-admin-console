@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    // アカウント一覧を表示する
+    // ユーザー一覧を表示する
     public function index(Request $request)
     {
         $data = User::paginate(10);
@@ -25,21 +25,31 @@ class UserController extends Controller
     // 所持アイテム一覧の表示
     public function showItem(Request $request)
     {
-        // クエリによる情報の取得
-        $data = HaveItem::select([
-            'users.id as user_id',
-            'users.name as user_name',
-            'items.name as item_name',
-            'have_items.quantity'
-        ])
-            ->join('users', function ($join) {
-                $join->on('have_items.user_id', '=', 'users.id');
-            })
-            ->join('items', function ($join) {
-                $join->on('have_items.item_id', '=', 'items.id');
-            })->paginate(10);
-        $data->onEachSide(2);
+        // 指定されたIDのデータを取得
+        $user = User::find($request->user_id);
+        if (!empty($user)) {
+            $items = $user->items()->paginate(2);
+            $items->appends(['id' => $request->user_id]);
+        }
 
-        return view('users/haveItems', ['haveItems' => $data]);
+        return view('users/haveItems', ['user' => $user, 'items' => $items ?? null]);
+    }
+
+    public function showFollow(Request $request)
+    {
+        $user = User::find($request->user_id);
+        if (!empty($user)) {
+            $follows = $user->follows()->get();
+            $followers = $user->followers()->get();
+
+            $follows_id = $follows->pluck('id')->toArray();
+            $followers_id = $followers->pluck('id')->toArray();
+            $mutualUsersID = array_intersect($follows_id, $followers_id);
+
+            $mutualUsers = User::whereIn('id', $mutualUsersID)->get();
+        }
+
+        return view('users.showFollows',
+            ['follows' => $follows ?? null, 'followers' => $followers ?? null, 'mutualUsers' => $mutualUsers ?? null]);
     }
 }

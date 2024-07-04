@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Follow;
 use App\Models\User;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -22,5 +23,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MailsTableSeeder::class);
         $this->call(SendItemsTableSeeder::class);
         $this->call(ReceiveMailsSeeder::class);
+        $this->call(FollowsTableSeeder::class);
     }
 }

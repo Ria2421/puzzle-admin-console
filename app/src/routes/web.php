@@ -47,7 +47,12 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
         Route::get('users/index/{user_id?}', [UserController::class, 'index'])->name('users.index');
 
         // 所持アイテムの表示
-        Route::get('users/haveItems/{user_id?}', [UserController::class, 'showItem'])->name('users.showItem');
+        Route::get('users/haveItems', [UserController::class, 'showItem'])->name('users.showItems');
+        Route::post('users/haveItems/{user_id?}', [UserController::class, 'showItem'])->name('users.showItem');
+
+        // 指定IDのフォロー情報表示
+        Route::get('users/findFollows', [UserController::class, 'showFollow'])->name('users.findFollows');
+        Route::post('users/findFollows/{user_id?}', [UserController::class, 'showFollow'])->name('users.showFollows');
 
         // アイテムの表示
         Route::get('items/index/{item_id?}', [ItemController::class, 'index'])->name('items.index');

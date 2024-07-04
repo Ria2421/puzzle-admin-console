@@ -34,12 +34,14 @@
             <li><a href="{{route('accounts.index')}}" class="nav-link px-2 @yield('account')">アカウント</a></li>
             <li><a href="{{route('users.index')}}" class="nav-link px-2 @yield('user')">ユーザー</a></li>
             <li><a href="{{route('items.index')}}" class="nav-link px-2 @yield('item')">アイテム</a></li>
-            <li><a href="{{route('users.showItem')}}" class="nav-link px-2 @yield('haveItem')">持ち物リスト</a></li>
+            <li><a href="{{route('users.showItems')}}" class="nav-link px-2 @yield('haveItem')">持ち物リスト</a></li>
             <li><a href="{{route('mails.index')}}" class="nav-link px-2 @yield('mail')">定型メール</a></li>
             <li><a href="{{route('mails.showSendItems')}}"
                    class="nav-link px-2 @yield('sendItem')">添付アイテムリスト</a></li>
             <li><a href="{{route('mails.showReceiveMails')}}"
                    class="nav-link px-2 @yield('receive')">ユーザー受信メール</a></li>
+            <li><a href="{{route('users.findFollows')}}"
+                   class="nav-link px-2 @yield('follow')">フォロー情報</a></li>
         </ul>
 
         <div class="col-md-3 text-end">

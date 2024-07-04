@@ -49,7 +49,7 @@
                 <td>{{$account['updated_at']}}</td>
                 <td width="140px">
                     @if($login == $account['id'])
-                        
+
                     @else
                         <a href="{{ route('accounts.destroyConf', ['id'=>$account['id']]) }}"
                            class="btn btn-danger">削除</a>
