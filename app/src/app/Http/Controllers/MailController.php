@@ -73,6 +73,7 @@ class MailController extends Controller
                 $join->on('receive_mails.mail_id', '=', 'mails.id');
             })
             ->paginate(10);
+        
         $data->onEachSide(2);
 
         return view('mails.receive', ['mails' => $data]);
@@ -81,6 +82,7 @@ class MailController extends Controller
     // メール送信フォームの表示
     public function showSendMail()
     {
+        // セレクトボックスの表示用のデータを取得
         $mails = Mail::All();
         $items = SendItem::select([
             'send_items.id as id',
