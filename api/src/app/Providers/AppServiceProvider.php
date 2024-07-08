@@ -1,4 +1,9 @@
 <?php
+//-------------------------------------------------
+// プロバイダー [AppServiceProvider.php]
+// Author:Kenta Nakamoto
+// Data:2024/07/08
+//-------------------------------------------------
 
 namespace App\Providers;
 
