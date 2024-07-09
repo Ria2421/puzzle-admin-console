@@ -48,7 +48,7 @@ Accept: application/json
 
 {
     "user_id": 151,
-    "name": "jobi2"
+    "level": 999
 }
 
 ### フォロー登録処理
@@ -69,4 +69,15 @@ Accept: application/json
 {
     "user_id": 151,
     "follow_id": 1
+}
+
+### 所持アイテムの更新
+POST http://localhost:8000/api/users/items/update
+Content-Type: application/json
+Accept: application/json
+
+{
+    "user_id": 1,
+    "item_id": 2,
+    "get_vol": 8
 }

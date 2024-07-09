@@ -11,12 +11,16 @@ use App\Http\Resources\FollowResource;
 use App\Http\Resources\UserItemResource;
 use App\Http\Resources\UserResource;
 use App\Models\Follow;
+use App\Models\HaveItem;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    //======================================================================
+    // ユーザーデータ関連 ===============================
+
     //------------------------------------
     // 指定IDのユーザーデータをJSON形式で返す
     public function show(Request $request)
@@ -49,21 +53,76 @@ class UserController extends Controller
         return response()->json(UserResource::collection($users));
     }
 
-    //-----------------------------------
-    // 指定ユーザーの所持アイテムリストを返す
-    public function items(Request $request)
+    //--------------------
+    // ユーザーの登録処理
+    public function store(Request $request)
     {
-        // 指定IDのユーザーデータをJSON形式で返す
+        // バリデーションチェック
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:64'],
+        ]);
+
+        if ($validator->fails()) {
+            // エラーが起きた時はステータス400を返す
+            return response()->json($validator->errors(), 400);
+        }
+
+        // 登録処理
+        $user = User::create([
+            'name' => $request->name,
+            'level' => 1,
+            'exp' => 0,
+            'life' => 5,
+        ]);
+
+        // クライアント側に自分のIDを送る
+        return response()->json(['user_id' => $user->id]);
+    }
+
+    //-----------------------
+    // ユーザー情報の更新処理
+    public function update(Request $request)
+    {
+        // バリデーションチェック
+        $validator = Validator::make($request->all(), [
+            'user_id' => ['required', 'int'],
+            'name' => ['string', 'max:64'],
+            'level' => ['int'],
+            'exp' => ['int'],
+            'life' => ['int'],
+        ]);
+
+        if ($validator->fails()) {
+            // エラーが起きた時はステータス400を返す
+            return response()->json($validator->errors(), 400);
+        }
+
+        // データの取得
         $user = User::findOrFail($request->user_id);
 
-        // 所持アイテムリストをリレーションで取得
-        $items = $user->items;
+        // 渡ってきたデータごとに上書き処理
+        if (isset($request->name)) {    // 名前
+            $user->name = $request->name;
+        }
+        if (isset($request->level)) {   // レベル
+            $user->level = $request->level;
+        }
+        if (isset($request->exp)) {     // 経験値
+            $user->exp = $request->exp;
+        }
+        if (isset($request->life)) {    // ライフ
+            $user->life = $request->life;
+        }
 
-        // 中間テーブル(have_items)のリソースを使いJSON化
-        $response['items'] = UserItemResource::collection($items);
+        // 更新処理
+        $user->save();
 
-        return response()->json($response);
+        // 完了ステータスを送信(クライアントには空の連想配列が渡る)
+        return response()->json();
     }
+
+    //======================================================================
+    // フォロー関連 =====================================
 
     //----------------------------------
     // 指定ユーザーIDのフォローリストを返す
@@ -164,43 +223,35 @@ class UserController extends Controller
         return response()->json(['follow_name' => $followUser->name]);
     }
 
-    //--------------------
-    // ユーザーの登録処理
-    public function store(Request $request)
+    //======================================================================
+    // 所持アイテム関連 =====================================
+
+    //-----------------------------------
+    // 指定ユーザーの所持アイテムリストを返す
+    public function items(Request $request)
     {
-        // バリデーションチェック
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:64'],
-        ]);
+        // 指定IDのユーザーデータをJSON形式で返す
+        $user = User::findOrFail($request->user_id);
 
-        if ($validator->fails()) {
-            // エラーが起きた時はステータス400を返す
-            return response()->json($validator->errors(), 400);
-        }
+        // 所持アイテムリストをリレーションで取得
+        $items = $user->items;
 
-        // 登録処理
-        $user = User::create([
-            'name' => $request->name,
-            'level' => 1,
-            'exp' => 0,
-            'life' => 5,
-        ]);
+        // 中間テーブル(have_items)のリソースを使いJSON化
+        $response['items'] = UserItemResource::collection($items);
 
-        // クライアント側に自分のIDを送る
-        return response()->json(['user_id' => $user->id]);
+        return response()->json($response);
     }
 
-    //-----------------------
-    // ユーザー情報の更新処理
-    public function update(Request $request)
+    //-----------------------------------
+    // 指定ユーザーの所持アイテム更新
+    public function itemUpdate(Request $request)
     {
         // バリデーションチェック
         $validator = Validator::make($request->all(), [
             'user_id' => ['required', 'int'],
-            'name' => ['string', 'max:64'],
-            'level' => ['int'],
-            'exp' => ['int'],
-            'life' => ['int'],
+            'item_id' => ['required', 'int'],
+            'get_vol' => ['int'],               // 入手量
+            'use_vol' => ['int'],               // 消費量
         ]);
 
         if ($validator->fails()) {
@@ -208,27 +259,58 @@ class UserController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        // データの取得
-        $user = User::findOrFail($request->user_id);
+        // アイテムを所持しているかチェック
+        $item = HaveItem::where('user_id', $request->user_id)->where('item_id', $request->item_id)->first();
 
-        // 渡ってきたデータごとに上書き処理
-        if (isset($request->name)) {    // 名前
-            $user->name = $request->name;
-        }
-        if (isset($request->level)) {   // レベル
-            $user->level = $request->level;
-        }
-        if (isset($request->exp)) {     // 経験値
-            $user->exp = $request->exp;
-        }
-        if (isset($request->life)) {    // ライフ
-            $user->life = $request->life;
-        }
+        if (isset($item)) {
+            // 所持している場合
 
-        // 更新処理
-        $user->save();
+            if (isset($request->get_vol)) {
+                // 更新処理
 
-        // 完了ステータスを送信(クライアントには空の連想配列が渡る)
-        return response()->json();
+                // 数量変更
+                $item->quantity = $item->quantity + $request->get_vol;
+                // 保存
+                $item->save();
+
+                // 200ステータスを返す
+                return response()->json();
+            } elseif ($request->use_vol) {
+                // 消費処理
+
+                // 数量変更
+                $item->quantity = $item->quantity - $request->use_vol;
+
+                if ($item->quantity < 0) {
+                    // 使用した結果、0より下回った時,ステータス400を返す
+                    return response()->json(["error" => "useError!"], 400);
+                }
+
+                // 保存
+                $item->save();
+
+                // 200ステータスを返す
+                return response()->json();
+            }
+        } else {
+            // 所持していない場合
+
+            if (isset($request->get_vol)) {
+                // 登録処理
+                $get = HaveItem::create([
+                    'user_id' => $request->user_id,
+                    'item_id' => $request->item_id,
+                    'quantity' => $request->get_vol,
+                ]);
+
+                // 200ステータスを返す
+                return response()->json();
+            } elseif ($request->use_vol) {
+                // 消費処理 (送られてくることは無いが念のため)
+
+                // 200ステータスを返す
+                return response()->json();
+            }
+        }
     }
 }

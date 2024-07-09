@@ -12,6 +12,7 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
     //-----------------------------------------------------------------------------------------------
     // ユーザー関連 ---------------
 
+    Route::post('users/items/update', [UserController::class, 'itemUpdate'])->name('users.items.update');
     // 指定ユーザーの所持アイテムリスト
     Route::get('users/items/{user_id}', [UserController::class, 'items'])->name('users.items');
     // 指定ユーザーIDのフォローデータを取得
