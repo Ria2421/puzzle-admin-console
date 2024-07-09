@@ -75,6 +75,7 @@ class AccountController extends Controller
     // 削除確認画面の表示
     public function destroyConf(Request $request)
     {
+        // 送られてきたIDからユーザーデータを取得
         $data = Account::where('id', '=', $request->id)->first();
         return view('accounts.destroyConf', ['accounts' => $data]);
     }
@@ -93,13 +94,13 @@ class AccountController extends Controller
     // 削除完了画面の表示
     public function destroyComp(Request $request)
     {
-        $name = $request->name;
-        return view('accounts.destroyComp', ['name' => $name]);
+        return view('accounts.destroyComp', ['name' => $request->name]);
     }
 
     // 更新画面の表示
     public function showUpdate(Request $request)
     {
+        // 送られてきたIDからアカウントデータを取得
         $data = Account::where('id', '=', $request->id)->first();
         return view('accounts.update', ['account' => $data]);
     }
@@ -130,8 +131,7 @@ class AccountController extends Controller
     // 更新完了表示
     public function UpdateComp(Request $request)
     {
-        $name = $request->name;
-        return view('accounts.updateComp', ['name' => $name]);
+        return view('accounts.updateComp', ['name' => $request->name]);
     }
 }
 

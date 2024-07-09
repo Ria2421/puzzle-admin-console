@@ -73,9 +73,10 @@ class MailController extends Controller
                 $join->on('receive_mails.mail_id', '=', 'mails.id');
             })
             ->paginate(10);
-        
+
         $data->onEachSide(2);
 
+        // 取得したデータをviewに渡して表示
         return view('mails.receive', ['mails' => $data]);
     }
 
@@ -94,6 +95,7 @@ class MailController extends Controller
             })
             ->get();
 
+        // 取得したデータをviewに渡して表示
         return view('mails.sendMail', ['mails' => $mails, 'items' => $items]);
     }
 
@@ -102,7 +104,11 @@ class MailController extends Controller
     {
         if ($request->user_id == 0) {
             /* 全ユーザー指定の場合 */
+
+            // 全ユーザーデータを取得
             $users = User::All();
+
+            // 送信処理(受信テーブルに登録)
             foreach ($users as $user) {
                 ReceiveMails::create([
                     'user_id' => $user->id,
@@ -112,6 +118,7 @@ class MailController extends Controller
                 ]);
             }
 
+            // 送信IDをsendComp()に渡す
             return redirect()->route('mails.showSendComp', ['id' => 0]);
         } else {
             /* ユーザー指定の場合 */
@@ -121,6 +128,8 @@ class MailController extends Controller
 
             if (isset($users)) {
                 // 指定IDが存在した時
+
+                // 送信処理(受信テーブルに登録)
                 ReceiveMails::create([
                     'user_id' => $request->user_id,
                     'mail_id' => $request->mail_id,
@@ -128,6 +137,7 @@ class MailController extends Controller
                     'unsealed_flag' => false
                 ]);
 
+                // 送信IDをsendComp()に渡す
                 return redirect()->route('mails.showSendComp', ['id' => $request->user_id]);
             } else {
                 // エラー表示
@@ -139,12 +149,15 @@ class MailController extends Controller
     // 送信完了画面
     public function showSendComp(Request $request)
     {
+        // 渡された送信IDごとに名前を取得
         if ($request->id == 0) {
             $name = '全ユーザー';
         } else {
             $data = User::find($request->id);
             $name = $data->name;
         }
+
+        // 取得した名前をviewに渡して表示
         return view('mails.sendComp', ['name' => $name]);
     }
 }

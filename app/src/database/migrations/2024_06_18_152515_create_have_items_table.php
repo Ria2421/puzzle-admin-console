@@ -12,9 +12,9 @@ return new class extends Migration {
     {
         Schema::create('have_items', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('item_id');
-            $table->integer('quantity');
+            $table->integer('user_id');     // 所持ユーザーID
+            $table->integer('item_id');     // 所持アイテムID
+            $table->integer('quantity');    // 所持数
             $table->timestamps();
 
             // 2つのidにユニーク制約設定

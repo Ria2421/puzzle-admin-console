@@ -17,16 +17,16 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
     // ログイン画面の表示
     Route::get('/', [AuthController::class, 'index'])->name('auth.index');
 
-// ログイン画面の表示
+    // ログイン画面の表示
     Route::get('authentications/index', [AuthController::class, 'index'])->name('auth.index');
 
-// ログイン処理
+    // ログイン処理
     Route::post('authentications/login', [AuthController::class, 'login'])->name('auth.login');
 
-// ログアウト処理
+    // ログアウト処理
     Route::post('authentications/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
-// アカウントルート
+    // アカウントルート
     Route::prefix('accounts')->name('accounts.')->controller(AccountController::class)
         ->middleware(AuthMiddleware::class)->group(function () {
             Route::get('index/{account_id?}', 'index')->name('index');             // アカウントの表示
@@ -43,7 +43,7 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
         });
 
     Route::middleware(AuthMiddleware::class)->group(function () {
-        // プレイヤーの表示
+        // ユーザーの表示
         Route::get('users/index/{user_id?}', [UserController::class, 'index'])->name('users.index');
 
         // 所持アイテムの表示

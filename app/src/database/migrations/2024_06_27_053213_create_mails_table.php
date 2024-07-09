@@ -9,8 +9,8 @@ return new class extends Migration {
     {
         Schema::create('mails', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 256);
-            $table->text('content');
+            $table->string('title', 256);   // 題名
+            $table->text('content');              // 本文
             $table->timestamps();
         });
     }

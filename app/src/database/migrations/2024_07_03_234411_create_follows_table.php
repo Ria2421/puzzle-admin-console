@@ -9,8 +9,8 @@ return new class extends Migration {
     {
         Schema::create('follows', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned()->index();
-            $table->bigInteger('follow_id')->unsigned()->index();
+            $table->bigInteger('user_id')->unsigned()->index();     // フォローを行ったユーザーID
+            $table->bigInteger('follow_id')->unsigned()->index();   // フォローされたユーザーID
             $table->timestamps();
 
             // usersテーブルを親とし、関連する親のレコードが削除されたときに該当するレコードを削除する

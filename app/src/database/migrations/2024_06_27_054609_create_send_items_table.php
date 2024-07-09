@@ -9,8 +9,8 @@ return new class extends Migration {
     {
         Schema::create('send_items', function (Blueprint $table) {
             $table->id();
-            $table->integer('item_id');
-            $table->integer('quantity');
+            $table->integer('item_id');     // アイテムID
+            $table->integer('quantity');    // 添付数
             $table->timestamps();
         });
     }

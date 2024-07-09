@@ -5,11 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c8a82cf4-30df-45ad-a712-986fae83edf5" name="変更" comment="">
-      <change beforePath="$PROJECT_DIR$/../api/src/app/Http/Controllers/MailController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/app/Http/Controllers/MailController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/dev.http" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/dev.http" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/routes/api.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/AccountController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/AccountController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/AuthController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/ItemController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/ItemController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/MailController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/MailController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/migrations/2024_06_18_150141_create_items_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/migrations/2024_06_18_150141_create_items_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/migrations/2024_06_18_152515_create_have_items_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/migrations/2024_06_18_152515_create_have_items_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/migrations/2024_06_24_005543_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/migrations/2024_06_24_005543_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/migrations/2024_06_27_053213_create_mails_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/migrations/2024_06_27_053213_create_mails_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/migrations/2024_06_27_054609_create_send_items_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/migrations/2024_06_27_054609_create_send_items_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/migrations/2024_06_27_072138_create_receive_mails_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/migrations/2024_06_27_072138_create_receive_mails_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/migrations/2024_07_03_234411_create_follows_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/migrations/2024_07_03_234411_create_follows_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,7 +197,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1720485120057</updated>
-      <workItem from="1720485121122" duration="7147000" />
+      <workItem from="1720485121122" duration="8721000" />
     </task>
     <servers />
   </component>

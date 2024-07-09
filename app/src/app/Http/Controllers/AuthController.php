@@ -24,6 +24,7 @@ class AuthController extends Controller
     // ログイン処理
     public function login(Request $request)
     {
+        // バリデーションチェック
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'min:4'],
             'password' => 'required',

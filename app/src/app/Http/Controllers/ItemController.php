@@ -15,8 +15,11 @@ class ItemController extends Controller
     // アイテム一覧の表示
     public function index(Request $request)
     {
+        // アイテムをページネーションに対応した形式で取得
         $data = Item::paginate(10);
+        // ページネーションの表示幅を設定
         $data->onEachSide(2);
+        // 取得データをviewに渡して表示
         return view('items/index', ['items' => $data]);
     }
 }
