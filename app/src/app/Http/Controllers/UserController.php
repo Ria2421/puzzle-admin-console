@@ -28,7 +28,7 @@ class UserController extends Controller
         // 指定されたIDのデータを取得
         $user = User::find($request->user_id);
         if (!empty($user)) {
-            $items = $user->items()->paginate(2);
+            $items = $user->items()->paginate(10);
             $items->appends(['id' => $request->user_id]);
         }
 

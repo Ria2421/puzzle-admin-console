@@ -14,6 +14,8 @@ return new class extends Migration {
             $table->integer('send_item_id');
             $table->boolean('unsealed_flag');
             $table->timestamps();
+
+            $table->unique('user_id', 'mail_id');     // ユニーク制約設定
         });
     }
 

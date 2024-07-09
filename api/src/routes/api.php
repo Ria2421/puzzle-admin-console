@@ -1,4 +1,9 @@
 <?php
+//-------------------------------------------------
+// APIルート [api.php]
+// Author:Kenta Nakamoto
+// Data:2024/07/08
+//-------------------------------------------------
 
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MailController;
@@ -12,21 +17,30 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
     //-----------------------------------------------------------------------------------------------
     // ユーザー関連 ---------------
 
+    // 所持アイテム更新処理
     Route::post('users/items/update', [UserController::class, 'itemUpdate'])->name('users.items.update');
-    // 指定ユーザーの所持アイテムリスト
+
+    // 指定ユーザーの所持アイテムリスト取得
     Route::get('users/items/{user_id}', [UserController::class, 'items'])->name('users.items');
-    // 指定ユーザーIDのフォローデータを取得
+
+    // 指定ユーザーIDのフォローデータ取得
     Route::get('users/follows/{user_id}', [UserController::class, 'follows'])->name('users.follows');
+
     // フォロー登録処理
     Route::post('users/follows/store', [UserController::class, 'followStore'])->name('users.follows.store');
+
     // フォロー解除処理
     Route::post('users/follows/destroy', [UserController::class, 'followDestroy'])->name('users.follows.destroy');
+
     // 指定レベル範囲のユーザーデータを取得
     Route::get('users/index', [UserController::class, 'index'])->name('users.index');
+
     // ユーザーの登録
     Route::post('users/store', [UserController::class, 'store'])->name('users.store');
+
     // ユーザー情報の更新
     Route::post('users/update', [UserController::class, 'update'])->name('users.update');
+
     // 指定ユーザーIDのデータを取得
     Route::get('users/{user_id}', [UserController::class, 'show'])->name('users.show');
 
@@ -44,4 +58,7 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
 
     // 指定したユーザーIDの受信メールデータを取得
     Route::get('mails/receive/{user_id}', [MailController::class, 'receive'])->name('mails.receive');
+
+    // 受信メール開封処理
+    Route::post('mails/update', [MailController::class, 'update'])->name('mails.update');
 });

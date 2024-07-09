@@ -81,3 +81,13 @@ Accept: application/json
     "item_id": 2,
     "get_vol": 8
 }
+
+### メールの開封処理
+POST http://localhost:8000/api/mails/update
+Content-Type: application/json
+Accept: application/json
+
+{
+    "user_id": 1,
+    "mail_id": 2
+}
