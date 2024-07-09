@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
+    //---------------------
     // 全アイテムの情報を返す
     public function index(Request $request)
     {

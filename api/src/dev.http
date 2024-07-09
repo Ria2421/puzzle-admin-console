@@ -1,5 +1,5 @@
 ### ユーザー情報取得
-GET http://localhost:8000/api/users/1
+GET http://localhost:8000/api/users/151
 Accept: application/json
 
 
@@ -14,7 +14,7 @@ Accept: application/json
 
 
 ### 指定したユーザーIDのフォローリストを取得
-GET http://localhost:8000/api/users/follows/1
+GET http://localhost:8000/api/users/follows/151
 Accept: application/json
 
 
@@ -31,3 +31,32 @@ Accept: application/json
 ### 指定したユーザーの受信メールを取得
 GET http://localhost:8000/api/mails/receive/5
 Accept: application/json
+
+### ユーザー登録
+POST http://localhost:8000/api/users/store
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "jobi"
+}
+
+### ユーザー情報の更新
+POST http://localhost:8000/api/users/update
+Content-Type: application/json
+Accept: application/json
+
+{
+    "user_id": 151,
+    "name": "jobi2"
+}
+
+### フォロー登録処理
+POST http://localhost:8000/api/users/follows/store
+Content-Type: application/json
+Accept: application/json
+
+{
+    "user_id": 151,
+    "follow_id": 1
+}

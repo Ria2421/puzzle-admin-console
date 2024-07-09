@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 class MailController extends Controller
 {
+    //--------------------------------
     // メールのマスターデータをすべて取得
     public function index(Request $request)
     {
@@ -17,6 +18,7 @@ class MailController extends Controller
         return response()->json(MailResource::collection($mails));
     }
 
+    //----------------------------
     // ユーザーID指定の受信メール取得
     public function receive(Request $request)
     {

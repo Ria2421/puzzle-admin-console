@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
 {
+    // アカウント一覧表示
     public function index(Request $request)
     {
         if (isset($request->id)) {
@@ -25,6 +26,7 @@ class AccountController extends Controller
             $data = Account::simplePaginate(10);
         }
 
+        // 表示処理・ログインセッションの開始
         return view('accounts/index', ['accounts' => $data, 'login' => $request->session()->get('login')]);
     }
 
@@ -37,6 +39,7 @@ class AccountController extends Controller
     // アカウント登録処理
     public function store(Request $request)
     {
+        // バリデーションチェック
         $validator = Validator::make($request->all(), [
             'name' => ['required', 'min:4'],
             'password' => ['required', 'confirmed']
@@ -79,9 +82,11 @@ class AccountController extends Controller
     // 削除処理
     public function destroy(Request $request)
     {
+        // データの取得・削除処理
         $account = Account::findOrFail($request->id);
         $account->delete();
 
+        // 完了表示・名前を渡す
         return redirect()->route('accounts.destroyComp', ['name' => $account->name]);
     }
 
@@ -113,10 +118,12 @@ class AccountController extends Controller
                 ->withInput();
         }
 
+        // データの取得・更新処理
         $account = Account::findOrFail($request->id);
         $account->password = Hash::make($request->password);
         $account->save();
 
+        // 更新完了表示・名前を渡す
         return redirect()->route('accounts.updateComp', ['name' => $account->name]);
     }
 
