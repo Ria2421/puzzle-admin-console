@@ -131,6 +131,39 @@ class UserController extends Controller
         return response()->json(['follow_name' => $followUser->name]);
     }
 
+    //----------------
+    // フォロー解除処理
+    public function followDestroy(Request $request)
+    {
+        // バリデーションチェック
+        $validator = Validator::make($request->all(), [
+            'user_id' => ['required', 'int'],
+            'follow_id' => ['required', 'int'],
+        ]);
+
+        if ($validator->fails()) {
+            // エラーが起きた時はステータス400を返す
+            return response()->json($validator->errors(), 400);
+        }
+
+        // ちゃんとフォローしているIDかチェック
+        $follow = Follow::where('follow_id', $request->follow_id)->where('user_id', $request->user_id)->first();
+
+        if (empty($follow)) {
+            // リストに居なかった場合、削除成功処理を送信(クライアント側には空の連想配列を送る)
+            return response()->json();
+        }
+
+        // フォロー情報削除
+        $follow->delete();
+
+        // フォローしたユーザー情報を取得
+        $followUser = User::findOrFail($request->follow_id);
+
+        // 削除成功処理を送信(クライアント側には削除した相手の名前を送る)
+        return response()->json(['follow_name' => $followUser->name]);
+    }
+
     //--------------------
     // ユーザーの登録処理
     public function store(Request $request)

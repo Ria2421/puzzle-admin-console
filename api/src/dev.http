@@ -60,3 +60,13 @@ Accept: application/json
     "user_id": 151,
     "follow_id": 1
 }
+
+### フォロー解除処理
+POST http://localhost:8000/api/users/follows/destroy
+Content-Type: application/json
+Accept: application/json
+
+{
+    "user_id": 151,
+    "follow_id": 1
+}

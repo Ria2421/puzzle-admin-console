@@ -5,19 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c8a82cf4-30df-45ad-a712-986fae83edf5" name="変更" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/laravel-idea.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/phpunit.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/app/Http/Controllers/ItemController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/app/Http/Controllers/ItemController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/app/Http/Controllers/MailController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/app/Http/Controllers/MailController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../api/src/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/app/Http/Controllers/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../api/src/dev.http" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/dev.http" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../api/src/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/Http/Controllers/AccountController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/Http/Controllers/AccountController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +24,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="PerforceDirect.Settings">
+    <option name="CHARSET" value="なし" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP">
     <include_path>
@@ -193,7 +187,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1720485120057</updated>
-      <workItem from="1720485121122" duration="1651000" />
+      <workItem from="1720485121122" duration="2162000" />
     </task>
     <servers />
   </component>

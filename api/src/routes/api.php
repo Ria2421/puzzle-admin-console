@@ -18,6 +18,8 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
     Route::get('users/follows/{user_id}', [UserController::class, 'follows'])->name('users.follows');
     // フォロー登録処理
     Route::post('users/follows/store', [UserController::class, 'followStore'])->name('users.follows.store');
+    // フォロー解除処理
+    Route::post('users/follows/destroy', [UserController::class, 'followDestroy'])->name('users.follows.destroy');
     // 指定レベル範囲のユーザーデータを取得
     Route::get('users/index', [UserController::class, 'index'])->name('users.index');
     // ユーザーの登録
