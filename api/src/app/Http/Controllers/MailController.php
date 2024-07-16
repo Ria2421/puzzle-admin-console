@@ -14,6 +14,7 @@ use App\Models\Mail;
 use App\Models\ReceiveMails;
 use App\Models\SendItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class MailController extends Controller
@@ -51,47 +52,52 @@ class MailController extends Controller
 
         // 開封処理--------------------------------------
 
-        // 該当するメールを検索
-        $mail = ReceiveMails::where('user_id', $request->user_id)->where('mail_id', $request->mail_id)->first();
+        // トランザクション処理
+        DB::transaction(function () use ($request, $validator) {
+            // 該当するメールを検索
+            $mail = ReceiveMails::where('user_id', $request->user_id)->where('mail_id', $request->mail_id)->first();
 
-        if (!isset($mail)) {
-            // 取得エラーが起きた時はステータス400を返す
-            return response()->json($validator->errors(), 400);
-        }
+            if (!isset($mail)) {
+                // 取得エラーが起きた時はステータス400を返す
+                return response()->json($validator->errors(), 400);
+            }
 
-        // 開封フラグをtrueに変更
-        $mail->unsealed_flag = true;
-        $mail->save();
+            // 開封フラグをtrueに変更
+            $mail->unsealed_flag = true;
+            $mail->save();
 
-        // アイテム受け取り処理 ----------------------------
+            // アイテム受け取り処理 ----------------------------
 
-        // 添付アイテム情報を取得 (アイテムIDと個数)
-        $getItem = SendItem::find($mail->send_item_id);
+            // 開封フラグがfalseの時のみ行う
 
-        // ユーザーが添付アイテムを所持しているかチェック
-        $item = HaveItem::where('user_id', $request->user_id)->where('item_id', $getItem->item_id)->first();
+            // 添付アイテム情報を取得 (アイテムIDと個数)
+            $getItem = SendItem::find($mail->send_item_id);
 
-        if (isset($item)) {
-            // 所持している場合は更新処理
+            // ユーザーが添付アイテムを所持しているかチェック
+            $item = HaveItem::where('user_id', $request->user_id)->where('item_id', $getItem->item_id)->first();
 
-            // 数量変更
-            $item->quantity = $item->quantity + $getItem->quantity;
-            // 保存
-            $item->save();
+            if (isset($item)) {
+                // 所持している場合は更新処理
 
-            // 200ステータスを返す
-            return response()->json();
-        } else {
-            // 所持していない場合は登録処理
+                // 数量変更
+                $item->quantity = $item->quantity + $getItem->quantity;
+                // 保存
+                $item->save();
 
-            HaveItem::create([
-                'user_id' => $request->user_id,
-                'item_id' => $getItem->item_id,
-                'quantity' => $getItem->quantity,
-            ]);
+                // 200ステータスを返す
+                return response()->json();
+            } else {
+                // 所持していない場合は登録処理
 
-            // 200ステータスを返す
-            return response()->json();
-        }
+                HaveItem::create([
+                    'user_id' => $request->user_id,
+                    'item_id' => $getItem->item_id,
+                    'quantity' => $getItem->quantity,
+                ]);
+
+                // 200ステータスを返す
+                return response()->json();
+            }
+        });
     }
 }

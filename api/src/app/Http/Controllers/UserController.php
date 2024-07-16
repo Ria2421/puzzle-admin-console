@@ -11,10 +11,13 @@ use App\Http\Resources\FollowResource;
 use App\Http\Resources\UserItemResource;
 use App\Http\Resources\UserResource;
 use App\Models\Follow;
+use App\Models\FollowLogs;
 use App\Models\HaveItem;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
 
 class UserController extends Controller
 {
@@ -97,28 +100,35 @@ class UserController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        // データの取得
-        $user = User::findOrFail($request->user_id);
+        // トランザクション処理
+        try {
+            // データの取得
+            $user = User::findOrFail($request->user_id);
 
-        // 渡ってきたデータごとに上書き処理
-        if (isset($request->name)) {    // 名前
-            $user->name = $request->name;
-        }
-        if (isset($request->level)) {   // レベル
-            $user->level = $request->level;
-        }
-        if (isset($request->exp)) {     // 経験値
-            $user->exp = $request->exp;
-        }
-        if (isset($request->life)) {    // ライフ
-            $user->life = $request->life;
-        }
+            // 渡ってきたデータごとに上書き処理
+            if (isset($request->name)) {    // 名前
+                $user->name = $request->name;
+            }
+            if (isset($request->level)) {   // レベル
+                $user->level = $request->level;
+            }
+            if (isset($request->exp)) {     // 経験値
+                $user->exp = $request->exp;
+            }
+            if (isset($request->life)) {    // ライフ
+                $user->life = $request->life;
+            }
 
-        // 更新処理
-        $user->save();
+            // 更新処理
+            $user->save();
 
-        // 完了ステータスを送信(クライアントには空の連想配列が渡る)
-        return response()->json();
+            // 完了ステータスを送信(クライアントには空の連想配列が渡る)
+            return response()->json();
+
+        } catch (Exception $e) {
+            // エラーメッセージ(ステータス:500)を返す
+            return response()->json($e, 500);
+        }
     }
 
     //======================================================================
@@ -170,6 +180,8 @@ class UserController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
+        // 指定されたユーザーIDが存在するか確認
+
         // 既にフォローしていないかチェック
         $check = Follow::where('follow_id', $request->follow_id)->where('user_id', $request->user_id)->first();
 
@@ -178,16 +190,31 @@ class UserController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        // チェック後に登録処理
-        $follow = Follow::create([
-            'user_id' => $request->user_id,
-            'follow_id' => $request->follow_id,
-        ]);
+        // トランザクション処理
+        try {
+            DB::transaction(function () use ($request) {
+                // チェック後に登録処理
+                Follow::create([
+                    'user_id' => $request->user_id,
+                    'follow_id' => $request->follow_id,
+                ]);
 
-        // フォローしたユーザー情報を取得
-        $followUser = User::findOrFail($request->follow_id);
+                // 登録ログを記録
+                FollowLogs::create([
+                    "user_id" => $request->user_id,
+                    "target_user_id" => $request->follow_id,
+                    "action" => 1
+                ]);
 
-        return response()->json(['follow_name' => $followUser->name]);
+                // フォローしたユーザー情報を取得
+                $followUser = User::findOrFail($request->follow_id);
+
+                return response()->json(['follow_name' => $followUser->name]);
+            });
+        } catch (Exception $e) {
+            // エラーメッセージ(ステータス:500)を返す
+            return response()->json($e, 500);
+        }
     }
 
     //----------------
@@ -205,22 +232,37 @@ class UserController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        // ちゃんとフォローしているIDかチェック
-        $follow = Follow::where('follow_id', $request->follow_id)->where('user_id', $request->user_id)->first();
+        // トランザクション対応
+        try {
+            DB::transaction(function () use ($request) {
+                // ちゃんとフォローしているIDかチェック
+                $follow = Follow::where('follow_id', $request->follow_id)->where('user_id', $request->user_id)->first();
 
-        if (empty($follow)) {
-            // リストに居なかった場合、削除成功処理を送信(クライアント側には空の連想配列を送る)
-            return response()->json();
+                if (empty($follow)) {
+                    // リストに居なかった場合、削除成功処理を送信(クライアント側には空の連想配列を送る)
+                    return response()->json();
+                }
+
+                // フォロー情報削除
+                $follow->delete();
+
+                // 登録ログを記録
+                FollowLogs::create([
+                    "user_id" => $request->user_id,
+                    "target_user_id" => $request->follow_id,
+                    "action" => 2
+                ]);
+            });
+
+            // フォローしたユーザー情報を取得
+            $followUser = User::findOrFail($request->follow_id);
+
+            // 削除成功処理を送信(クライアント側には削除した相手の名前を送る)
+            return response()->json(['follow_name' => $followUser->name]);
+        } catch (Exception $e) {
+            // エラーメッセージ(ステータス:500)を返す
+            return response()->json($e, 500);
         }
-
-        // フォロー情報削除
-        $follow->delete();
-
-        // フォローしたユーザー情報を取得
-        $followUser = User::findOrFail($request->follow_id);
-
-        // 削除成功処理を送信(クライアント側には削除した相手の名前を送る)
-        return response()->json(['follow_name' => $followUser->name]);
     }
 
     //======================================================================
@@ -259,58 +301,70 @@ class UserController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        // アイテムを所持しているかチェック
-        $item = HaveItem::where('user_id', $request->user_id)->where('item_id', $request->item_id)->first();
+        // 指定されたユーザーIDが存在するか確認
 
-        if (isset($item)) {
-            // 所持している場合
+        // 指定されたアイテムIDが存在するか
 
-            if (isset($request->get_vol)) {
-                // 更新処理
+        // トランザクション処理
+        try {
+            DB::transaction(function () use ($request) {
+                // アイテムを所持しているかチェック
+                $item = HaveItem::where('user_id', $request->user_id)->where('item_id', $request->item_id)->first();
 
-                // 数量変更
-                $item->quantity = $item->quantity + $request->get_vol;
-                // 保存
-                $item->save();
+                if (isset($item)) {
+                    // 所持している場合
 
-                // 200ステータスを返す
-                return response()->json();
-            } elseif ($request->use_vol) {
-                // 消費処理
+                    if (isset($request->get_vol)) {
+                        // 更新処理
 
-                // 数量変更
-                $item->quantity = $item->quantity - $request->use_vol;
+                        // 数量変更
+                        $item->quantity = $item->quantity + $request->get_vol;
+                        // 保存
+                        $item->save();
 
-                if ($item->quantity < 0) {
-                    // 使用した結果、0より下回った時,ステータス400を返す
-                    return response()->json(["error" => "useError!"], 400);
+                        // 200ステータスを返す
+                        return response()->json();
+                    } elseif ($request->use_vol) {
+                        // 消費処理
+
+                        // 数量変更
+                        $item->quantity = $item->quantity - $request->use_vol;
+
+                        if ($item->quantity < 0) {
+                            // 使用した結果、0より下回った時,ステータス400を返す
+                            return response()->json(["error" => "useError!"], 400);
+                        }
+
+                        // 保存
+                        $item->save();
+
+                        // 200ステータスを返す
+                        return response()->json();
+                    }
+                } else {
+                    // 所持していない場合
+
+                    if (isset($request->get_vol)) {
+                        // 登録処理
+                        $get = HaveItem::create([
+                            'user_id' => $request->user_id,
+                            'item_id' => $request->item_id,
+                            'quantity' => $request->get_vol,
+                        ]);
+
+                        // 200ステータスを返す
+                        return response()->json();
+                    } elseif ($request->use_vol) {
+                        // 消費処理 (送られてくることは無いが念のため)
+
+                        // 200ステータスを返す
+                        return response()->json();
+                    }
                 }
-
-                // 保存
-                $item->save();
-
-                // 200ステータスを返す
-                return response()->json();
-            }
-        } else {
-            // 所持していない場合
-
-            if (isset($request->get_vol)) {
-                // 登録処理
-                $get = HaveItem::create([
-                    'user_id' => $request->user_id,
-                    'item_id' => $request->item_id,
-                    'quantity' => $request->get_vol,
-                ]);
-
-                // 200ステータスを返す
-                return response()->json();
-            } elseif ($request->use_vol) {
-                // 消費処理 (送られてくることは無いが念のため)
-
-                // 200ステータスを返す
-                return response()->json();
-            }
+            });
+        } catch (Exception $e) {
+            // エラーメッセージ(ステータス:500)を返す
+            return response()->json($e, 500);
         }
     }
 }

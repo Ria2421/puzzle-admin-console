@@ -1,11 +1,16 @@
 <?php
+//-------------------------------------------------
+// フォローログモデル [follow.php]
+// Author:Kenta Nakamoto
+// Data:2024/06/17
+//-------------------------------------------------
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class HaveItem extends Model
+class FollowLogs extends Model
 {
     use HasFactory;
 

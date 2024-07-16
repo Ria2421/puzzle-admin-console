@@ -42,6 +42,8 @@
                    class="nav-link px-2 @yield('receive')">ユーザー受信メール</a></li>
             <li><a href="{{route('users.findFollows')}}"
                    class="nav-link px-2 @yield('follow')">フォロー情報</a></li>
+            <li><a href="{{route('users.findFollowLogs')}}"
+                   class="nav-link px-2 @yield('followLogs')">フォローログ</a></li>
         </ul>
 
         <div class="col-md-3 text-end">

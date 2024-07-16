@@ -43,6 +43,9 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
         });
 
     Route::middleware(AuthMiddleware::class)->group(function () {
+        //==========================================
+        // ユーザー関連 =====
+
         // ユーザーの表示
         Route::get('users/index/{user_id?}', [UserController::class, 'index'])->name('users.index');
 
@@ -54,8 +57,19 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
         Route::get('users/findFollows', [UserController::class, 'showFollow'])->name('users.findFollows');
         Route::post('users/findFollows/{user_id?}', [UserController::class, 'showFollow'])->name('users.showFollows');
 
+        // 指定IDのフォロー操作ログ表示
+        Route::get('users/findFollowLogs', [UserController::class, 'showFollowLogs'])->name('users.findFollowLogs');
+        Route::post('users/findFollowLogs/{user_id?}',
+            [UserController::class, 'showFollowLogs'])->name('users.showFollowLogs');
+
+        //==========================================
+        // アイテム関連 =====
+
         // アイテムの表示
         Route::get('items/index/{item_id?}', [ItemController::class, 'index'])->name('items.index');
+
+        //==========================================
+        // メール関連 =====
 
         // メール一覧の表示
         Route::get('mails/index/{mail_id?}', [MailController::class, 'index'])->name('mails.index');

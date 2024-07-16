@@ -7,6 +7,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FollowLogs;
 use App\Models\HaveItem;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -38,6 +39,7 @@ class UserController extends Controller
         return view('users/haveItems', ['user' => $user, 'items' => $items ?? null]);
     }
 
+    // 指定IDのフォロー情報を取得する処理
     public function showFollow(Request $request)
     {
         // 指定ユーザーIDのユーザーデータを取得
@@ -62,5 +64,22 @@ class UserController extends Controller
         // フォロー・フォロワー・相互フォロワーのユーザーデータを渡してviewを表示
         return view('users.showFollows',
             ['follows' => $follows ?? null, 'followers' => $followers ?? null, 'mutualUsers' => $mutualUsers ?? null]);
+    }
+
+    // 指定IDのフォロー操作のログを取得
+    public function showFollowLogs(Request $request)
+    {
+        // 指定ユーザーIDが存在するかチェック
+        $user = User::find($request->user_id);
+
+        if (!empty($user)) {
+            // 指定されたIDのユーザーデータが存在した時
+
+            // 指定ユーザーIDのレコードを取得
+            $followLogs = FollowLogs::where('user_id', $request->user_id)->get();
+        }
+
+        // 取得したログを渡してviewを表示
+        return view('users.showFollowLogs', ['followLogs' => $followLogs ?? null]);
     }
 }

@@ -9,12 +9,12 @@ Accept: application/json
 
 
 ### 指定したユーザーIDの所持アイテム情報を取得
-GET http://localhost:8000/api/users/items/2
+GET http://localhost:8000/api/users/items/1
 Accept: application/json
 
 
 ### 指定したユーザーIDのフォローリストを取得
-GET http://localhost:8000/api/users/follows/151
+GET http://localhost:8000/api/users/follows/1
 Accept: application/json
 
 
@@ -29,7 +29,7 @@ Accept: application/json
 
 
 ### 指定したユーザーの受信メールを取得
-GET http://localhost:8000/api/mails/receive/5
+GET http://localhost:8000/api/mails/receive/2
 Accept: application/json
 
 ### ユーザー登録
@@ -57,8 +57,8 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "user_id": 151,
-    "follow_id": 1
+    "user_id": 1,
+    "follow_id": 15
 }
 
 ### フォロー解除処理
@@ -67,8 +67,8 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "user_id": 151,
-    "follow_id": 1
+    "user_id": 1,
+    "follow_id": 2
 }
 
 ### 所持アイテムの更新
@@ -88,6 +88,6 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "user_id": 1,
-    "mail_id": 2
+    "user_id": 2,
+    "mail_id": 1
 }
