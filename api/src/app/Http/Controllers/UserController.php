@@ -182,6 +182,7 @@ class UserController extends Controller
         }
 
         // 指定されたユーザーIDが存在するか確認
+        User::findOrFail($request->user_id);
 
         // 既にフォローしていないかチェック
         $check = Follow::where('follow_id', $request->follow_id)->where('user_id', $request->user_id)->first();
