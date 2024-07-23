@@ -1,8 +1,8 @@
 <?php
 //-------------------------------------------------
-// フォローログマイグレーション
+// アイテムログマイグレーション
 // Author:Kenta Nakamoto
-// Data:2024/07/18
+// Data:2024/07/23
 //-------------------------------------------------
 
 use Illuminate\Database\Migrations\Migration;
@@ -12,17 +12,18 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('follow_logs', function (Blueprint $table) {
+        Schema::create('item_logs', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id')->index();    // 操作を行ったユーザーID
-            $table->integer('target_user_id');      // 対象のユーザーID
-            $table->integer('action');              // 操作内容 [1:登録,2:解除]
+            $table->integer('target_item_id');      // 使用したアイテムID
+            $table->integer('action');              // 操作内容 [1:消費 2:入手]
+            $table->integer('quantity');            // 操作した個数
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('follow_logs');
+        Schema::dropIfExists('item_logs');
     }
 };

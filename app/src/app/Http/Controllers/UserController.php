@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FollowLogs;
 use App\Models\HaveItem;
+use App\Models\ItemLogs;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -81,5 +82,22 @@ class UserController extends Controller
 
         // 取得したログを渡してviewを表示
         return view('users.showFollowLogs', ['followLogs' => $followLogs ?? null]);
+    }
+
+    // 指定IDのアイテム操作のログを取得
+    public function showItemLogs(Request $request)
+    {
+        // 指定ユーザーIDが存在するかチェック
+        $user = User::find($request->user_id);
+
+        if (!empty($user)) {
+            // 指定されたIDのユーザーデータが存在した時
+
+            // 指定ユーザーIDのレコードを取得
+            $itemLogs = ItemLogs::where('user_id', $request->user_id)->get();
+        }
+
+        // 取得したログを渡してviewを表示
+        return view('users.showItemLogs', ['itemLogs' => $itemLogs ?? null]);
     }
 }

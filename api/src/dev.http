@@ -1,5 +1,5 @@
 ### ユーザー情報取得
-GET http://localhost:8000/api/users/151
+GET http://localhost:8000/api/users/1
 Accept: application/json
 
 
@@ -29,7 +29,7 @@ Accept: application/json
 
 
 ### 指定したユーザーの受信メールを取得
-GET http://localhost:8000/api/mails/receive/2
+GET http://localhost:8000/api/mails/receive/1
 Accept: application/json
 
 ### ユーザー登録
@@ -77,9 +77,9 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "user_id": 1,
-    "item_id": 2,
-    "get_vol": 8
+    "user_id": 100,
+    "item_id": 1,
+    "get_vol": 10
 }
 
 ### メールの開封処理

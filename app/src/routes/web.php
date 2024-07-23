@@ -62,6 +62,11 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
         Route::post('users/findFollowLogs/{user_id?}',
             [UserController::class, 'showFollowLogs'])->name('users.showFollowLogs');
 
+        // 指定IDのアイテム操作ログ表示
+        Route::get('users/findItemLogs', [UserController::class, 'showItemLogs'])->name('users.findItemLogs');
+        Route::post('users/findItemLogs/{user_id?}',
+            [UserController::class, 'showItemLogs'])->name('users.showItemLogs');
+
         //==========================================
         // アイテム関連 =====
 

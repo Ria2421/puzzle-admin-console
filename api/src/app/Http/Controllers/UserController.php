@@ -13,6 +13,7 @@ use App\Http\Resources\UserResource;
 use App\Models\Follow;
 use App\Models\FollowLogs;
 use App\Models\HaveItem;
+use App\Models\ItemLogs;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -322,6 +323,14 @@ class UserController extends Controller
                         // 保存
                         $item->save();
 
+                        // 入手ログを記録
+                        ItemLogs::create([
+                            "user_id" => $request->user_id,
+                            "target_item_id" => $request->item_id,
+                            "action" => 2,
+                            "quantity" => $request->get_vol
+                        ]);
+
                         // 200ステータスを返す
                         return response()->json();
                     } elseif ($request->use_vol) {
@@ -338,6 +347,14 @@ class UserController extends Controller
                         // 保存
                         $item->save();
 
+                        // 消費ログを記録
+                        ItemLogs::create([
+                            "user_id" => $request->user_id,
+                            "target_item_id" => $request->item_id,
+                            "action" => 1,
+                            "quantity" => $request->use_vol
+                        ]);
+
                         // 200ステータスを返す
                         return response()->json();
                     }
@@ -346,10 +363,18 @@ class UserController extends Controller
 
                     if (isset($request->get_vol)) {
                         // 登録処理
-                        $get = HaveItem::create([
+                        HaveItem::create([
                             'user_id' => $request->user_id,
                             'item_id' => $request->item_id,
                             'quantity' => $request->get_vol,
+                        ]);
+
+                        // 入手ログを記録
+                        ItemLogs::create([
+                            "user_id" => $request->user_id,
+                            "target_item_id" => $request->item_id,
+                            "action" => 2,
+                            "quantity" => $request->get_vol
                         ]);
 
                         // 200ステータスを返す
