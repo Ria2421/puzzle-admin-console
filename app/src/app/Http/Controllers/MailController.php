@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\Mail;
+use App\Models\MailLogs;
 use App\Models\ReceiveMails;
 use App\Models\SendItem;
 use App\Models\User;
@@ -116,6 +117,14 @@ class MailController extends Controller
                     'send_item_id' => $request->send_item_id,
                     'unsealed_flag' => false
                 ]);
+
+                // 受信ログを生成
+                MailLogs::create([
+                    'user_id' => $user->id,
+                    'mail_id' => $request->mail_id,
+                    'send_item_id' => $request->send_item_id,
+                    'action' => 1
+                ]);
             }
 
             // 送信IDをsendComp()に渡す
@@ -135,6 +144,14 @@ class MailController extends Controller
                     'mail_id' => $request->mail_id,
                     'send_item_id' => $request->send_item_id,
                     'unsealed_flag' => false
+                ]);
+
+                // 受信ログを生成
+                MailLogs::create([
+                    'user_id' => $request->user_id,
+                    'mail_id' => $request->mail_id,
+                    'send_item_id' => $request->send_item_id,
+                    'action' => 1
                 ]);
 
                 // 送信IDをsendComp()に渡す
@@ -159,5 +176,22 @@ class MailController extends Controller
 
         // 取得した名前をviewに渡して表示
         return view('mails.sendComp', ['name' => $name]);
+    }
+
+    // 指定IDのアイテム操作のログを取得
+    public function showMailLogs(Request $request)
+    {
+        // 指定ユーザーIDが存在するかチェック
+        $user = User::find($request->user_id);
+
+        if (!empty($user)) {
+            // 指定されたIDのユーザーデータが存在した時
+
+            // 指定ユーザーIDのレコードを取得
+            $mailLogs = MailLogs::where('user_id', $request->user_id)->get();
+        }
+
+        // 取得したログを渡してviewを表示
+        return view('mails.showMailLogs', ['mailLogs' => $mailLogs ?? null]);
     }
 }

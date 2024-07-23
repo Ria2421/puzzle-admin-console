@@ -96,6 +96,11 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
 
         // 送信完了画面表示
         Route::get('mails/showSendComp', [MailController::class, 'showSendComp'])->name('mails.showSendComp');
+
+        // 指定IDのメール操作ログ表示
+        Route::get('mails/findMailLogs', [MailController::class, 'showMailLogs'])->name('mails.findMailLogs');
+        Route::post('mails/findMailLogs/{user_id?}',
+            [MailController::class, 'showMailLogs'])->name('mails.showMailLogs');
     });
 });
 

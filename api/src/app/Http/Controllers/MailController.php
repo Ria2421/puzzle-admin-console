@@ -11,6 +11,7 @@ use App\Http\Resources\MailResource;
 use App\Http\Resources\UserMailResource;
 use App\Models\HaveItem;
 use App\Models\Mail;
+use App\Models\MailLogs;
 use App\Models\ReceiveMails;
 use App\Models\SendItem;
 use Illuminate\Http\Request;
@@ -62,13 +63,12 @@ class MailController extends Controller
                 return response()->json($validator->errors(), 400);
             }
 
-            // 開封フラグをtrueに変更
-            $mail->unsealed_flag = true;
-            $mail->save();
+            // 開封フラグがtrueの場合は開封済みの為、ステータス200を返す
+            if ($mail->unsealed_flag) {
+                return response()->json();
+            }
 
             // アイテム受け取り処理 ----------------------------
-
-            // 開封フラグがfalseの時のみ行う
 
             // 添付アイテム情報を取得 (アイテムIDと個数)
             $getItem = SendItem::find($mail->send_item_id);
@@ -83,9 +83,6 @@ class MailController extends Controller
                 $item->quantity = $item->quantity + $getItem->quantity;
                 // 保存
                 $item->save();
-
-                // 200ステータスを返す
-                return response()->json();
             } else {
                 // 所持していない場合は登録処理
 
@@ -94,10 +91,22 @@ class MailController extends Controller
                     'item_id' => $getItem->item_id,
                     'quantity' => $getItem->quantity,
                 ]);
-
-                // 200ステータスを返す
-                return response()->json();
             }
+
+            // 開封フラグをtrueに変更
+            $mail->unsealed_flag = true;
+            $mail->save();
+
+            // 受信ログを生成
+            MailLogs::create([
+                'user_id' => $request->user_id,
+                'mail_id' => $request->mail_id,
+                'send_item_id' => $mail->send_item_id,
+                'action' => 2
+            ]);
+
+            // 200ステータスを返す
+            return response()->json();
         });
     }
 }

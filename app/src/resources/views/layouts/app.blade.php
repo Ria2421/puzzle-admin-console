@@ -46,6 +46,8 @@
                    class="nav-link px-2 @yield('followLogs')">フォローログ</a></li>
             <li><a href="{{route('users.findItemLogs')}}"
                    class="nav-link px-2 @yield('itemLogs')">アイテムログ</a></li>
+            <li><a href="{{route('mails.findMailLogs')}}"
+                   class="nav-link px-2 @yield('mailLogs')">メールログ</a></li>
         </ul>
 
         <div class="col-md-3 text-end">
