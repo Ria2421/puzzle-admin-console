@@ -19,32 +19,19 @@
         class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li>
-                <form method="GET" action="{{route('accounts.create')}}">
-                    @csrf
-                    <button type="submit" class="btn btn-outline-primary me-2">登録</button>
-                </form>
-            </li>
-            <li>
-                <form method="GET" action="{{route('mails.showSendMail')}}">
-                    @csrf
-                    <button type="submit" class="btn btn-outline-primary me-2">メール送信</button>
-                </form>
-            </li>
-            <li><a href="{{route('accounts.index')}}" class="nav-link px-2">アカウント</a></li>
-            <li><a href="{{route('users.index')}}" class="nav-link px-2  link-secondary">ユーザー</a></li>
-            <li><a href="{{route('items.index')}}" class="nav-link px-2">アイテム</a></li>
-            <li><a href="{{route('users.showItem')}}" class="nav-link px-2">持ち物リスト</a></li>
-            <li><a href="{{route('mails.index')}}" class="nav-link px-2">定型メール</a></li>
-            <li><a href="{{route('mails.showSendItems')}}" class="nav-link px-2">添付アイテムリスト</a></li>
-            <li><a href="{{route('mails.showReceiveMails')}}" class="nav-link px-2">ユーザー受信メール</a></li>
+            <a href="{{route('accounts.index')}}"
+               class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                <img src="/images/home.png" alt="ホーム" width="45px" height="45px">
+                ホーム
+            </a>
         </ul>
 
         <div>
-            <form method="POST" action="{{route('auth.logout')}}">
-                @csrf
-                <button type="submit" class="btn btn-outline-primary me-2">ログアウト</button>
-            </form>
+            <a href="{{route('auth.logout')}}"
+               class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                <img src="/images/logout.png" alt="ログアウト" width="45px" height="45px">
+                ログアウト
+            </a>
         </div>
 
     </header>

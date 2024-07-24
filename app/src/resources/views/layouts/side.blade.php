@@ -113,7 +113,8 @@
 
     <div class="flex-shrink-0 p-3" style="width: 280px;">
         <!-- タイトル -->
-        <a href="/" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+        <a href="{{route('accounts.index')}}"
+           class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
             <img src="/images/adminIcon.png" width="45px" height="45px">
             <span class="fs-4 fw-semibold">管理ツール</span>
         </a>

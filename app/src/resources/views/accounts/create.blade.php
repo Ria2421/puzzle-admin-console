@@ -3,7 +3,6 @@
 // Author:Kenta Nakamoto
 // Data:2024/06/10
 //-------------------------------------------->
-
 @extends('layouts.signInApp')
 
 @section('title','アカウント作成')
