@@ -24,7 +24,7 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
     Route::post('authentications/login', [AuthController::class, 'login'])->name('auth.login');
 
     // ログアウト処理
-    Route::post('authentications/logout', [AuthController::class, 'logout'])->name('auth.logout');
+    Route::get('authentications/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
     // アカウントルート
     Route::prefix('accounts')->name('accounts.')->controller(AccountController::class)

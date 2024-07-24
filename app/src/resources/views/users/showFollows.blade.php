@@ -3,15 +3,17 @@
 // Author:Kenta Nakamoto
 // Data:2024/07/04
 //-------------------------------------------->
-@extends('layouts.app')
+@extends('layouts.side')
 
 @section('title','フォロー一覧')
-@section('follow','link-secondary')
+
+@section('user','true')
+@section('showUser','show')
 
 @section('body')
     <!-- 表示内容 -->
-    <div class="container text-center bg-primary-subtle" style="width: 500px">
-        <h3 class="display-6">▼ フォロー情報 ▼</h3>
+    <div class="container text-center bg-dark-subtle" style="width: 500px">
+        <h3 class="display-6"> フォロー情報 </h3>
     </div>
 
     <!--検索-->
@@ -31,7 +33,7 @@
                 @if(isset($follows))
                     <!--フォロー-->
                     <div>フォロー</div>
-                    <table class="table table-bordered mx-auto p-2">
+                    <table class="table table-hover mx-auto p-2">
                         <tr>
                             <th>ID</th>
                             <th>ユーザー名</th>
@@ -51,7 +53,7 @@
                 @if(isset($followers))
                     <!--フォロワー-->
                     <div>フォロワー</div>
-                    <table class="table table-bordered mx-auto p-2" style="width: 60%">
+                    <table class="table table-hover mx-auto p-2" style="width: 60%">
                         <tr>
                             <th>ID</th>
                             <th>ユーザー名</th>
@@ -70,7 +72,7 @@
                 @if(isset($mutualUsers))
                     <!--相互フォロー-->
                     <div>相互フォロー</div>
-                    <table class="table table-bordered mx-auto p-2" style="width: 60%">
+                    <table class="table table-hover mx-auto p-2" style="width: 60%">
                         <tr>
                             <th>ID</th>
                             <th>ユーザー名</th>

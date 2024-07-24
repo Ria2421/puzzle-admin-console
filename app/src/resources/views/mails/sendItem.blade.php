@@ -3,15 +3,17 @@
 // Author:Kenta Nakamoto
 // Data:2024/06/11
 //-------------------------------------------->
-@extends('layouts.app')
+@extends('layouts.side')
 
 @section('title','送信完了')
-@section('sendItem','link-secondary')
+
+@section('master','true')
+@section('showMaster','show')
 
 @section('body')
     <!-- 表示内容 -->
-    <div class="container text-center bg-primary-subtle" style="width: 500px">
-        <h3 class="display-6">▼ 添付アイテムリスト ▼</h3>
+    <div class="container text-center bg-dark-subtle" style="width: 500px">
+        <h3 class="display-6"> 添付アイテムリスト </h3>
     </div>
 
     <br>
@@ -21,7 +23,7 @@
         {{$items->links('vendor.pagination.bootstrap-5')}}
     </div>
 
-    <table class="table table-bordered mx-auto p-2" style="width: 60%">
+    <table class="table table-hover mx-auto p-2" style="width: 60%">
         <tr>
             <th>ID</th>
             <th>アイテム名</th>

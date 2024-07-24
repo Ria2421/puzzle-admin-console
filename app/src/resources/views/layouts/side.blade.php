@@ -1,9 +1,14 @@
+<!--------------------------------------------
+// webページレイアウト (サイドバー) [app.blade.php]
+// Author:Kenta Nakamoto
+// Data:2024/07/24
+//-------------------------------------------->
 <!DOCTYPE html>
 <html lang="ja" data-bs-theme="auto">
 
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
 
-    <title> タイトル </title>
+    <title> @yield('title') </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
           crossorigin="anonymous">
@@ -103,80 +108,127 @@
 </svg>
 <!-- /アイコンの設定 -->
 
+<!-- 折り畳み可能リストのサイドバー -->
 <main class="d-flex flex-nowrap">
 
-    <!-- 折り畳み可能リストのサイドバー -->
     <div class="flex-shrink-0 p-3" style="width: 280px;">
+        <!-- タイトル -->
         <a href="/" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
-            <img src="/images/icon.jpg" width="35px" height="35px">
-            <span class="fs-5 fw-semibold">管理ツール</span>
+            <img src="/images/adminIcon.png" width="45px" height="45px">
+            <span class="fs-4 fw-semibold">管理ツール</span>
         </a>
         <ul class="list-unstyled ps-0">
+
+            <!-- マスタデータ -->
             <li class="mb-1">
                 <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0"
-                        data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                    ホーム
+                        data-bs-toggle="collapse" data-bs-target="#master-collapse" aria-expanded="@yield('master')">
+                    マスタデータ
                 </button>
-                <div class="collapse show" id="home-collapse">
+                <div class="collapse @yield('showMaster')" id="master-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">概要</a>
+                        <li><a href="{{route('accounts.index')}}"
+                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">アカウント</a>
                         </li>
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">更新</a>
+                        <li><a href="{{route('items.index')}}"
+                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">アイテム</a>
                         </li>
-                        <li><a href="#"
-                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">レポート</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="mb-1">
-                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0"
-                        data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-                    ダッシュボード
-                </button>
-                <div class="collapse" id="dashboard-collapse">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">概要</a>
+                        <li><a href="{{route('mails.index')}}"
+                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">定型メール</a>
                         </li>
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">毎週</a>
-                        </li>
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">毎月</a>
-                        </li>
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">毎年</a>
+                        <li><a href="{{route('mails.showSendItems')}}"
+                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">添付アイテム</a>
                         </li>
                     </ul>
                 </div>
             </li>
+
+            <!-- ユーザーデータ -->
             <li class="mb-1">
                 <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0"
-                        data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-                    注文
+                        data-bs-toggle="collapse" data-bs-target="#user-collapse" aria-expanded="@yield('user')">
+                    ユーザーデータ
                 </button>
-                <div class="collapse" id="orders-collapse">
+                <div class="collapse @yield('showUser')" id="user-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">新品</a>
+                        <li><a href="{{route('users.index')}}"
+                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">ユーザー</a>
                         </li>
-                        <li><a href="#"
-                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">処理済み</a></li>
-                        <li><a href="#"
-                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">出荷済み</a></li>
-                        <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">返品</a>
+                        <li><a href="{{route('users.showItems')}}"
+                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">所持アイテム</a>
+                        </li>
+                        <li><a href="{{route('mails.showReceiveMails')}}"
+                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">受信メール</a>
+                        </li>
+                        <li><a href="{{route('users.findFollows')}}"
+                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">フォロー</a>
                         </li>
                     </ul>
                 </div>
             </li>
+
+            <!-- ログデータ -->
+            <li class="mb-1">
+                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0"
+                        data-bs-toggle="collapse" data-bs-target="#log-collapse" aria-expanded="@yield('log')">
+                    ログ
+                </button>
+                <div class="collapse @yield('showLog')" id="log-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="{{route('users.findFollowLogs')}}"
+                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">フォロー</a>
+                        </li>
+                        <li><a href="{{route('users.findItemLogs')}}"
+                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">アイテム</a>
+                        </li>
+                        <li><a href="{{route('mails.findMailLogs')}}"
+                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">メール</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
+            <!-- 操作関連 -->
+            <li class="mb-1">
+                <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0"
+                        data-bs-toggle="collapse" data-bs-target="#action-collapse" aria-expanded="@yield('action')">
+                    操作
+                </button>
+                <div class="collapse @yield('showAction')" id="action-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="{{route('accounts.create')}}"
+                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">アカウント登録</a>
+                        </li>
+                        <li><a href="{{route('mails.showSendMail')}}"
+                               class="link-body-emphasis d-inline-flex text-decoration-none rounded">メール送信</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <!-- 境界線 -->
             <li class="border-top my-3"></li>
+
+            <!-- ログアウト -->
             <li class="mb-1">
-                <img src="/images/logout.png" width="45px" height="45px">
-                <div>ログアウト</div>
+                <a href="{{route('auth.logout')}}"
+                   class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                    <img src="/images/logout.png" alt="ログアウト" width="45px" height="45px">
+                    ログアウト
+                </a>
             </li>
         </ul>
     </div>
     <!-- /折り畳み可能リストのサイドバー -->
 
+    <!-- 表示内容との境目 -->
     <div class="b-example-divider b-example-vr"></div>
-</main>
 
-<!---->
+    <!-- 各項目ごとの表示内容 -->
+    <div style="width:100%">
+        <!-- 表示内容 -->
+        @yield('body')
+    </div>
+</main>
 
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
     <symbol id="circle-half" viewBox="0 0 16 16">

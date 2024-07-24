@@ -3,14 +3,16 @@
 // Author:Kenta Nakamoto
 // Data:2024/06/11
 //-------------------------------------------->
-@extends('layouts.app')
+@extends('layouts.side')
 
 @section('title','所持アイテム一覧')
-@section('haveItem','link-secondary')
+
+@section('user','true')
+@section('showUser','show')
 
 @section('body')
     <!-- 表示内容 -->
-    <div class="container text-center bg-primary-subtle" style="width: 500px">
+    <div class="container text-center bg-dark-subtle" style="width: 500px">
         <h3 class="display-6">▼ 所持アイテム一覧 ▼</h3>
     </div>
 
@@ -33,7 +35,7 @@
 
     </div>
 
-    <table class="table table-bordered mx-auto p-2" style="width: 60%">
+    <table class="table table-hover mx-auto p-2" style="width: 60%">
         <tr>
             <th>ユーザーID</th>
             <th>ユーザー名</th>

@@ -24,7 +24,7 @@ class UserController extends Controller
         $data->onEachSide(2);
 
         // 取得データをviewに渡して表示
-        return view('test', ['users' => $data]);
+        return view('users.index', ['users' => $data]);
     }
 
     // 所持アイテム一覧の表示

@@ -3,15 +3,17 @@
 // Author:Kenta Nakamoto
 // Data:2024/07/23
 //-------------------------------------------->
-@extends('layouts.app')
+@extends('layouts.side')
 
 @section('title','メールログ')
-@section('mailLogs','link-secondary')
+
+@section('log','true')
+@section('showLog','show')
 
 @section('body')
     <!-- 表示内容 -->
-    <div class="container text-center bg-primary-subtle" style="width: 500px">
-        <h3 class="display-6">▼ メールログ ▼</h3>
+    <div class="container text-center bg-dark-subtle" style="width: 500px">
+        <h3 class="display-6"> メールログ </h3>
     </div>
 
     <!--検索-->
@@ -27,7 +29,7 @@
 
     @if(isset($mailLogs))
 
-        <table class="table table-bordered mx-auto p-2" style="width: 60%">
+        <table class="table table-hover mx-auto p-2" style="width: 60%">
             <tr>
                 <th>ログID</th>
                 <th>ユーザーID</th>

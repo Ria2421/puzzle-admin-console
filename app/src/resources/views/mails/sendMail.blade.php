@@ -3,14 +3,17 @@
 // Author:Kenta Nakamoto
 // Data:2024/06/27
 //-------------------------------------------->
-@extends('layouts.app')
+@extends('layouts.side')
 
 @section('title','送信')
 
+@section('action','true')
+@section('showAction','show')
+
 @section('body')
     <!-- 表示内容 -->
-    <div class="container text-center bg-primary-subtle" style="width: 500px">
-        <h3 class="display-6">▼ メール送信 ▼</h3>
+    <div class="container text-center bg-dark-subtle" style="width: 500px">
+        <h3 class="display-6"> メール送信 </h3>
     </div>
     <br>
 

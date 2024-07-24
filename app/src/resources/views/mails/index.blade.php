@@ -4,16 +4,18 @@
 // Data:2024/06/11
 //-------------------------------------------->
 
-@extends('layouts.app')
+@extends('layouts.side')
 
 @section('title','メール定型文')
-@section('mail','link-secondary')
+
+@section('master','true')
+@section('showMaster','show')
 
 @section('body')
 
     <!-- 表示内容 -->
-    <div class="container text-center bg-primary-subtle" style="width: 500px">
-        <h3 class="display-6">▼ メール定型文 ▼</h3>
+    <div class="container text-center bg-dark-subtle" style="width: 500px">
+        <h3 class="display-6"> メール定型文 </h3>
     </div>
 
     <!--検索-->
@@ -32,7 +34,7 @@
         {{$mails->links('vendor.pagination.bootstrap-5')}}
     </div>
 
-    <table class="table table-bordered mx-auto p-2" style="width: 60%">
+    <table class="table table-hover mx-auto p-2" style="width: 60%">
         <tr>
             <th>ID</th>
             <th>タイトル</th>
