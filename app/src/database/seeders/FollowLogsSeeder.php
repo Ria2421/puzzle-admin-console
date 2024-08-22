@@ -1,4 +1,10 @@
 <?php
+//--------------------------------------------------
+// フォローログテーブルシーダー [FollowLogsTableSeeder.php]
+// Author:Kenta Nakamoto
+//  Data :2024/07/16
+// Update:2024/08/22
+//---------------------------------------------------
 
 namespace Database\Seeders;
 

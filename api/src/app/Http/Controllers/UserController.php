@@ -13,6 +13,7 @@ use App\Http\Resources\UserResource;
 use App\Models\Follow;
 use App\Models\FollowLogs;
 use App\Models\HaveItem;
+use App\Models\Item;
 use App\Models\ItemLogs;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -34,29 +35,6 @@ class UserController extends Controller
         return response()->json(UserResource::make($user));
     }
 
-    //------------------------------------------
-    // 指定のlevel条件に一致するユーザーをすべて返す
-    public function index(Request $request)
-    {
-        // ヴァリデーションチェック
-        $validator = Validator::make($request->all(), [
-            'min_level' => ['required', 'integer'],
-            'max_level' => ['required', 'integer'],
-        ]);
-
-        if ($validator->fails()) {
-            // エラーが起きた時はステータス400を返す
-            return response()->json($validator->errors(), 400);
-        }
-
-        // データの取得
-        $users = User::All()->where('level', '>=', $request->min_level)
-            ->where('level', '<=', $request->max_level);
-
-        // JSONにして返す
-        return response()->json(UserResource::collection($users));
-    }
-
     //--------------------
     // ユーザーの登録処理
     public function store(Request $request)
@@ -74,9 +52,7 @@ class UserController extends Controller
         // 登録処理
         $user = User::create([
             'name' => $request->name,
-            'level' => 1,
-            'exp' => 0,
-            'life' => 5,
+            'icon_id' => 1,
         ]);
 
         // クライアント側に自分のIDを送る
@@ -90,10 +66,8 @@ class UserController extends Controller
         // バリデーションチェック
         $validator = Validator::make($request->all(), [
             'user_id' => ['required', 'int'],
-            'name' => ['string', 'max:64'],
-            'level' => ['int'],
-            'exp' => ['int'],
-            'life' => ['int'],
+            'name' => ['string', 'max:32'],
+            'icon_id' => ['int'],
         ]);
 
         if ($validator->fails()) {
@@ -110,14 +84,8 @@ class UserController extends Controller
             if (isset($request->name)) {    // 名前
                 $user->name = $request->name;
             }
-            if (isset($request->level)) {   // レベル
-                $user->level = $request->level;
-            }
-            if (isset($request->exp)) {     // 経験値
-                $user->exp = $request->exp;
-            }
-            if (isset($request->life)) {    // ライフ
-                $user->life = $request->life;
+            if (isset($request->level)) {   // アイコンID
+                $user->icon_id = $request->icon_id;
             }
 
             // 更新処理
@@ -292,8 +260,8 @@ class UserController extends Controller
     {
         // バリデーションチェック
         $validator = Validator::make($request->all(), [
-            'user_id' => ['required', 'int'],
-            'item_id' => ['required', 'int'],
+            'user_id' => ['required', 'int'],   // ユーザーID
+            'item_id' => ['required', 'int'],   // アイテムID
             'get_vol' => ['int'],               // 入手量
             'use_vol' => ['int'],               // 消費量
         ]);
@@ -304,8 +272,10 @@ class UserController extends Controller
         }
 
         // 指定されたユーザーIDが存在するか確認
+        User::findOrFail($request->user_id);
 
-        // 指定されたアイテムIDが存在するか
+        // 指定されたアイテムIDが存在するか確認
+        Item::findOrFail($request->item_id);
 
         // トランザクション処理
         try {

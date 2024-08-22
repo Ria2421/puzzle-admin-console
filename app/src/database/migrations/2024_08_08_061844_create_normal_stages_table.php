@@ -1,9 +1,10 @@
 <?php
-//-------------------------------------------------
-// ノーマルステージマイグレーション
+//-------------------------------------------------------------------------
+// ノーマルステージマイグレーション [2024_08_08_061844_create_normal_stages_table.php]
 // Author:Kenta Nakamoto
-// Data:2024/08/08
-//-------------------------------------------------
+//  Data :2024/08/08
+// Update:2024/08/22
+//-------------------------------------------------------------------------
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,8 +15,9 @@ return new class extends Migration {
     {
         Schema::create('normal_stages', function (Blueprint $table) {
             $table->id();
-            $table->string('name');      // ステージ名
-            $table->json('gimmick_pos'); // ギミック座標情報
+            $table->string('name');             // ステージ名
+            $table->unsignedInteger('item_id'); // 報酬アイテムID
+            $table->json('gimmick_pos');        // ギミック座標情報
             $table->timestamps();
         });
     }

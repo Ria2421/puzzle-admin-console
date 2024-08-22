@@ -1,4 +1,10 @@
 <?php
+//--------------------------------------------------
+// メールログテーブルシーダー [MailLogsTableSeeder.php]
+// Author:Kenta Nakamoto
+//  Data :2024/07/23
+// Update:2024/08/22
+//---------------------------------------------------
 
 namespace Database\Seeders;
 

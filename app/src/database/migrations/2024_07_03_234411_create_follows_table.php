@@ -1,4 +1,10 @@
 <?php
+//-------------------------------------------------------------------------
+// フォローマイグレーション [2024_07_03_234411_follows_table.php]
+// Author:Kenta Nakamoto
+//  Data :2024/07/03
+// Update:2024/08/22
+//-------------------------------------------------------------------------
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

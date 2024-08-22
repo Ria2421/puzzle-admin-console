@@ -1,4 +1,10 @@
 <?php
+//-------------------------------------------------------------------------
+// アイテムマイグレーション [2024_06_17_105451_create_items_table.php]
+// Author:Kenta Nakamoto
+//  Data :2024/06/17
+// Update:2024/08/22
+//-------------------------------------------------------------------------
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

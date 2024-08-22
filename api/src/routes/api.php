@@ -7,6 +7,7 @@
 
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\StageController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\NoCacheMiddleware;
 use Illuminate\Http\Request;
@@ -31,9 +32,6 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
 
     // フォロー解除処理
     Route::post('users/follows/destroy', [UserController::class, 'followDestroy'])->name('users.follows.destroy');
-
-    // 指定レベル範囲のユーザーデータを取得
-    Route::get('users/index', [UserController::class, 'index'])->name('users.index');
 
     // ユーザーの登録
     Route::post('users/store', [UserController::class, 'store'])->name('users.store');
@@ -61,4 +59,10 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
 
     // 受信メール開封処理
     Route::post('mails/update', [MailController::class, 'update'])->name('mails.update');
+
+    //-----------------------------------------------------------------------------------------------
+    // ステージ関連 -----------------
+
+    // ステージプレイログ登録処理
+    Route::post('stages/store/result', [StageController::class, 'storeResult'])->name('stages.result.store');
 });

@@ -1,4 +1,10 @@
 <?php
+//--------------------------------------------------
+// フォローテーブルシーダー [FollowsTableSeeder.php]
+// Author:Kenta Nakamoto
+//  Data :2024/07/03
+// Update:2024/08/22
+//---------------------------------------------------
 
 namespace Database\Seeders;
 

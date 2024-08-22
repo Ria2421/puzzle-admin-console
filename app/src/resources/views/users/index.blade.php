@@ -25,18 +25,14 @@
         <tr>
             <th>ID</th>
             <th>名前</th>
-            <th>レベル</th>
-            <th>経験値</th>
-            <th>ライフ</th>
+            <th>アイコンID</th>
         </tr>
 
         @foreach($users as $user)
             <tr>
                 <td>{{$user['id']}}</td>
                 <td>{{$user['name']}}</td>
-                <td>{{$user['level']}}</td>
-                <td>{{$user['exp']}}</td>
-                <td>{{$user['life']}}</td>
+                <td>{{$user['icon_id']}}</td>
             </tr>
         @endforeach
     </table>

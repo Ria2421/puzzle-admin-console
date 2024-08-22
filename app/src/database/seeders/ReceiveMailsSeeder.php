@@ -1,4 +1,10 @@
 <?php
+//----------------------------------------------------
+// 受信メールテーブルシーダー [ReceiveMailsTableSeeder.php]
+// Author:Kenta Nakamoto
+//  Data :2024/06/27
+// Update:2024/08/22
+//-----------------------------------------------------
 
 namespace Database\Seeders;
 
