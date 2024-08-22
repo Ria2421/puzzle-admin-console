@@ -1,4 +1,10 @@
 <?php
+//--------------------------------------------------
+// ノーキャッシュミドルウェア [NoCacheMiddleware.php]
+// Author:Kenta Nakamoto
+//  Data :2024/07/01
+// Update:2024/08/22
+//---------------------------------------------------
 
 namespace App\Http\Middleware;
 

@@ -1,4 +1,10 @@
 <?php
+//--------------------------------------------------
+// 認証ミドルウェア [AuthMiddleware.php]
+// Author:Kenta Nakamoto
+//  Data :2024/06/25
+// Update:2024/08/22
+//---------------------------------------------------
 
 namespace App\Http\Middleware;
 
