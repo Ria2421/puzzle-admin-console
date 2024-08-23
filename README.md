@@ -9,7 +9,7 @@
 https://ca-puzzle.wittyisland-baffbddd.japaneast.azurecontainerapps.io
 
 # 使用技術
-+ PHP (Laravel)
++ PHP (フレームワーク：Laravel)
 + Docker
 + Azure
   + Azure Database for MySQL
