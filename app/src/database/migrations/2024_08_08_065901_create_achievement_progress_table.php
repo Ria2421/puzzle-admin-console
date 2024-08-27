@@ -1,6 +1,6 @@
 <?php
 //-----------------------------------------------------------------------------------------
-// アチーブメントログマイグレーション [2024_08_08_065901_create_achievement_progress_table.php]
+// アチーブメント進捗マイグレーション [2024_08_08_065901_create_achievement_progress_table.php]
 // Author:Kenta Nakamoto
 //  Data :2024/08/08
 // Update:2024/08/22

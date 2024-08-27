@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');                 // ステージ名
             $table->unsignedInteger('user_id');     // 作成者ユーザーID
-            $table->json('gimmick_pos');            // ギミック座標情報
+            $table->string('gimmick_pos');          // ギミック座標情報
             $table->unsignedInteger('good_vol');    // イイネ数
             $table->timestamps();
         });

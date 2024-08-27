@@ -100,6 +100,23 @@ class UserController extends Controller
         }
     }
 
+    //------------------------------------------
+    // 指定ユーザーIDのプロフィール情報取得
+    public function getSummary(Request $request)
+    {
+        // 指定IDのユーザーデータをJSON形式で返す
+        $user = User::findOrFail($request->user_id);
+
+        // フォロー・フォロワーリスト----------------------
+
+        // データの取得
+        $follow = $user->follows;
+        $follower = $user->followers;
+        $respons['follow_cnt'] = count($follow);
+
+        return response()->json($respons);
+    }
+
     //======================================================================
     // フォロー関連 =====================================
 

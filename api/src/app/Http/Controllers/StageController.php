@@ -7,12 +7,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\NormalStageResource;
+use App\Models\NormalStage;
 use App\Models\PlayLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class StageController extends Controller
 {
+    //------------------------------------
+    // ノーマルステージデータ取得
+    public function getNormal()
+    {
+        $stages = NormalStage::All();
+        return response()->json(NormalStageResource::collection($stages));
+    }
+
     //------------------------------------
     // リザルトログ登録処理
     public function storeResult(Request $request)

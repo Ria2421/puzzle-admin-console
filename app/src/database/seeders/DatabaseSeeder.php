@@ -3,7 +3,7 @@
 // データベースシーダー [DataBaseSeeder.php]
 // Author:Kenta Nakamoto
 //  Data :2024/06/17
-// Update:2024/08/22
+// Update:2024/08/26
 //---------------------------------------------------
 
 namespace Database\Seeders;
@@ -33,5 +33,14 @@ class DatabaseSeeder extends Seeder
         $this->call(FollowLogsSeeder::class);
         $this->call(ItemLogsSeeder::class);
         $this->call(MailLogsSeeder::class);
+        $this->call(GachasTableSeeder::class);
+        $this->call(GachaLogsTableSeeder::class);
+        $this->call(GachaEmissionItemsTableSeeder::class);
+        $this->call(AchievementsTableSeeder::class);
+        $this->call(AchievementProgressTableSeeder::class);
+        $this->call(CreateStagesTableSeeder::class);
+        $this->call(NormalStagesTableSeeder::class);
+        $this->call(PlayLogsTableSeeder::class);
+        $this->call(ShareInfosTableSeeder::class);
     }
 }

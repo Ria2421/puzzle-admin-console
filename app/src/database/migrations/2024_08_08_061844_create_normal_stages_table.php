@@ -15,9 +15,8 @@ return new class extends Migration {
     {
         Schema::create('normal_stages', function (Blueprint $table) {
             $table->id();
-            $table->string('name');             // ステージ名
-            $table->unsignedInteger('item_id'); // 報酬アイテムID
-            $table->json('gimmick_pos');        // ギミック座標情報
+            $table->unsignedInteger('item_id');     // 報酬アイテムID
+            $table->unsignedInteger('quantity');    // 個数
             $table->timestamps();
         });
     }

@@ -34,6 +34,8 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
     Route::post('users/update', [UserController::class, 'update'])->name('users.update');
     // 指定ユーザーIDのデータを取得
     Route::get('users/{user_id}', [UserController::class, 'show'])->name('users.show');
+    // 指定ユーザーIDのプロフィール情報を取得
+    Route::get('users/summary/{user_id}', [UserController::class, 'getSummary'])->name('users.summary');
 
     //-----------------------------------------------------------------------------------------------
     // アイテム関連 ---------------
@@ -54,6 +56,8 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
     //-----------------------------------------------------------------------------------------------
     // ステージ関連 -----------------
 
+    // ノーマルステージデータ取得処理
+    Route::get('stages/normal', [StageController::class, 'getNormal'])->name('stages.normal');
     // ステージプレイログ登録処理
     Route::post('stages/store/result', [StageController::class, 'storeResult'])->name('stages.result.store');
 });
