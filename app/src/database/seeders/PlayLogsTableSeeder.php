@@ -17,6 +17,8 @@ class PlayLogsTableSeeder extends Seeder
     {
         PlayLog::create(["user_id" => 1, "stage_id" => 1, "stage_type" => 1, "clear_flag" => true]);
         PlayLog::create(["user_id" => 1, "stage_id" => 2, "stage_type" => 1, "clear_flag" => true]);
+        PlayLog::create(["user_id" => 1, "stage_id" => 3, "stage_type" => 1, "clear_flag" => false]);
+        PlayLog::create(["user_id" => 1, "stage_id" => 3, "stage_type" => 1, "clear_flag" => false]);
         PlayLog::create(["user_id" => 1, "stage_id" => 3, "stage_type" => 1, "clear_flag" => true]);
     }
 }

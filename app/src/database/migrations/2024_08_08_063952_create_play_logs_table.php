@@ -20,6 +20,9 @@ return new class extends Migration {
             $table->unsignedInteger('stage_type');  // ステージタイプ(1.ノーマル 2.クリエイト)
             $table->boolean('clear_flag');          // クリア判定(true:成功 false:失敗)
             $table->timestamps();
+
+            // 2つのidにインデックス設定
+            $table->index(['user_id', 'stage_id']);
         });
     }
 

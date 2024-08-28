@@ -10,11 +10,13 @@ namespace App\Http\Controllers;
 use App\Http\Resources\FollowResource;
 use App\Http\Resources\UserItemResource;
 use App\Http\Resources\UserResource;
+use App\Models\CreateStage;
 use App\Models\Follow;
 use App\Models\FollowLogs;
 use App\Models\HaveItem;
 use App\Models\Item;
 use App\Models\ItemLogs;
+use App\Models\PlayLog;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -107,14 +109,30 @@ class UserController extends Controller
         // 指定IDのユーザーデータをJSON形式で返す
         $user = User::findOrFail($request->user_id);
 
-        // フォロー・フォロワーリスト----------------------
+        //---------------------
+        // 表示用データの取得
 
-        // データの取得
-        $follow = $user->follows;
-        $follower = $user->followers;
-        $respons['follow_cnt'] = count($follow);
+        $follow = $user->follows;       // フォロー情報
+        $follower = $user->followers;   // フォロワー情報
+        $playData = PlayLog::where('user_id', $request->user_id)->get();        // プレイログデータ
+        $createData = CreateStage::where('user_id', $request->user_id)->get();  // カスタムステージデータ
+        // ログデータからクリア回数を取得
+        $clearCnt = 0;
+        foreach ($playData as $data) {
+            if ($data['clear_flag'] === 1) {
+                // クリアデータの時に加算
+                $clearCnt++;
+            }
+        }
 
-        return response()->json($respons);
+        $response['play_cnt'] = count($playData);       // プレイ回数
+        $response['clear_cnt'] = $clearCnt;             // クリア回数
+        $response['create_cnt'] = count($createData);   // ステージ作成回数
+        $response['follow_cnt'] = count($follow);       // フォロー数
+        $response['follower_cnt'] = count($follower);   // フォロワー数
+
+        // プロフデータを返却
+        return response()->json($response);
     }
 
     //======================================================================
