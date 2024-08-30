@@ -10,6 +10,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\NormalStageResource;
 use App\Models\NormalStage;
 use App\Models\PlayLog;
+use App\Models\ShareInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -34,7 +35,6 @@ class StageController extends Controller
             'stage_type' => ['required', 'int'],
             'clear_flag' => ['required', 'bool'],
         ]);
-
         if ($validator->fails()) {
             // エラーが起きた時はステータス400を返す
             return response()->json($validator->errors(), 400);
@@ -46,9 +46,35 @@ class StageController extends Controller
         // 受信ログを生成
         PlayLog::create([
             'user_id' => $request->user_id,
-            'stage_id' => $request->mail_id,
-            'stage_type' => $request->send_item_id,
+            'stage_id' => $request->stage_id,
+            'stage_type' => $request->stage_type,
             'clear_flag' => $request->clear_flag
         ]);
+        // 完了ステータスを送信(クライアントには空の連想配列が渡る)
+        return response()->json();
     }
+
+    //-------------------------------
+    // クリエイトステージ共有処理
+    public function share(Request $request)
+    {
+        // バリデーションチェック
+        $validator = Validator::make($request->all(), [
+            'user_id' => ['required', 'int'],
+            'stage_id' => ['required', 'int']
+        ]);
+        if ($validator->fails()) {
+            // エラーが起きた時はステータス400を返す
+            return response()->json($validator->errors(), 400);
+        }
+
+        // 共有情報登録処理
+        ShareInfo::create([
+            'user_id' => $request->user_id,
+            'stage_id' => $request->stage_id,
+        ]);
+        // 完了ステータスを送信(クライアントには空の連想配列が渡る)
+        return response()->json();
+    }
+
 }

@@ -60,4 +60,6 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
     Route::get('stages/normal', [StageController::class, 'getNormal'])->name('stages.normal');
     // ステージプレイログ登録処理
     Route::post('stages/store/result', [StageController::class, 'storeResult'])->name('stages.result.store');
+    // ステージ共有情報
+    Route::post('/stages/share', [StageController::class, 'share'])->name('stages.share');
 });
