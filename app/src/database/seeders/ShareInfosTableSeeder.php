@@ -18,5 +18,9 @@ class ShareInfosTableSeeder extends Seeder
         ShareInfo::create(["user_id" => 1, "stage_id" => 1]);
         ShareInfo::create(["user_id" => 1, "stage_id" => 2]);
         ShareInfo::create(["user_id" => 1, "stage_id" => 3]);
+        ShareInfo::create(["user_id" => 2, "stage_id" => 1]);
+        ShareInfo::create(["user_id" => 2, "stage_id" => 2]);
+        ShareInfo::create(["user_id" => 3, "stage_id" => 1]);
+        ShareInfo::create(["user_id" => 3, "stage_id" => 3]);
     }
 }

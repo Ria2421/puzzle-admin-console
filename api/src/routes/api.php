@@ -60,6 +60,20 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
     Route::get('stages/normal', [StageController::class, 'getNormal'])->name('stages.normal');
     // ステージプレイログ登録処理
     Route::post('stages/store/result', [StageController::class, 'storeResult'])->name('stages.result.store');
-    // ステージ共有情報
+    // ステージ共有処理
     Route::post('/stages/share', [StageController::class, 'share'])->name('stages.share');
+    // フォローユーザーのクリエイトステージを取得
+    Route::get('/stages/create/follow/{user_id}',
+        [StageController::class, 'getFollowStage'])->name('stages.create.follow');
+    // イイネが多い順で30件取得
+    Route::get('/stages/create/good', [StageController::class, 'getGood'])->name('stages.create.good');
+    // フォローが共有したステージを30件取得
+    Route::get('/stages/create/share/{user_id}', [StageController::class, 'getShare'])->name('stages.create.share');
+    // イイネ数の更新処理
+    Route::post('/stages/update/good', [StageController::class, 'updateGood'])->name('stages.update.good');
+    // クリエイトステージデータを登録
+    Route::post('/stages/create/store', [StageController::class, 'storeStage'])->name('stages.create.store');
+    // 指定IDのクリエイトステージデータを消去
+    Route::post('/stages/create/destroy',
+        [StageController::class, 'destroyStage'])->name('stages.create.destroy');
 });

@@ -33,6 +33,24 @@ class CreateStagesTableSeeder extends Seeder
             "gimmick_pos" => "",
             "good_vol" => 3
         ]);
+        CreateStage::create([
+            "name" => "sample4",
+            "user_id" => 3,
+            "gimmick_pos" => "",
+            "good_vol" => 5
+        ]);
+        CreateStage::create([
+            "name" => "sample5",
+            "user_id" => 4,
+            "gimmick_pos" => "",
+            "good_vol" => 0
+        ]);
+        CreateStage::create([
+            "name" => "sample6",
+            "user_id" => 5,
+            "gimmick_pos" => "",
+            "good_vol" => 88
+        ]);
     }
 }
 

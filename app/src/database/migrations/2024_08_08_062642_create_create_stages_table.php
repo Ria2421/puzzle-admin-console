@@ -15,10 +15,10 @@ return new class extends Migration {
     {
         Schema::create('create_stages', function (Blueprint $table) {
             $table->id();
-            $table->string('name');                 // ステージ名
-            $table->unsignedInteger('user_id');     // 作成者ユーザーID
-            $table->string('gimmick_pos');          // ギミック座標情報
-            $table->unsignedInteger('good_vol');    // イイネ数
+            $table->string('name');                                   // ステージ名
+            $table->unsignedInteger('user_id');                       // 作成者ユーザーID
+            $table->string('gimmick_pos');                            // ギミック座標情報
+            $table->unsignedInteger('good_vol')->default(0);    // イイネ数
             $table->timestamps();
         });
     }
