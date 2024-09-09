@@ -62,6 +62,8 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
     Route::post('stages/store/result', [StageController::class, 'storeResult'])->name('stages.result.store');
     // ステージ共有処理
     Route::post('stages/share', [StageController::class, 'share'])->name('stages.share');
+    // 指定IDのクリエイトステージを取得
+    Route::get('stages/create/{stage_id}', [StageController::class, 'createID'])->name('stages.create');
     // 指定ユーザーのクリエイトステージを取得
     Route::get('stages/create/user/{user_id}', [StageController::class, 'createUser'])->name('stages.create.user');
     // フォローユーザーのクリエイトステージを取得

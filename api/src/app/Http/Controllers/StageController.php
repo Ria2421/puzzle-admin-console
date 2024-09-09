@@ -78,6 +78,15 @@ class StageController extends Controller
     }
 
     //-------------------------------
+    // 指定IDのクリエイトステージを取得
+    public function createID(Request $request)
+    {
+        // 指定IDのステージデータを取得
+        $stage = CreateStage::findOrFail($request->stage_id);
+        return response()->json(CreateStageResource::make($stage));
+    }
+
+    //-------------------------------
     // 指定ユーザーのクリエイトステージを取得
     public function createUser(Request $request)
     {
