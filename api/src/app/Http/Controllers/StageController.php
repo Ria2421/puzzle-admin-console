@@ -78,13 +78,23 @@ class StageController extends Controller
     }
 
     //-------------------------------
+    // 指定ユーザーのクリエイトステージを取得
+    public function createUser(Request $request)
+    {
+        // ステージ情報取得
+        $stages = CreateStage::where('user_id', "=", $request->user_id)->get();
+
+        return response()->json(CreateStageResource::collection($stages));
+    }
+
+    //-------------------------------
     // フォローのクリエイトデータを取得
     public function getFollowStage(Request $request)
     {
         // プレイユーザーのフォロー情報取得
         $user = User::findOrFail($request->user_id);    // プレイユーザーデータを取得
         $follow = $user->follows;                       // フォロー情報を取得
-        $followsID = $follow->pluck('id')->toArray();  // フォローユーザーのIDを取得
+        $followsID = $follow->pluck('id')->toArray();   // フォローユーザーのIDを取得
         // ステージ情報取得
         $stages = CreateStage::whereIn('user_id', $followsID)->get();
 

@@ -34,6 +34,10 @@ Accept: application/json
 GET http://localhost:8000/api/stages/normal
 Accept: application/json
 
+### 指定ユーザーのクリエイトステージを取得
+GET http://localhost:8000/api/stages/create/user/1
+Accept: application/json
+
 ### フォローユーザーのクリエイトステージを取得
 GET http://localhost:8000/api/stages/create/follow/2
 Accept: application/json
@@ -134,16 +138,16 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "name": 1,
-    "user_id": 5,
-    "gimmick_pos": ""
+    "name": "hoge",
+    "user_id": 100,
+    "gimmick_pos": "{[ID:1,X:1.55f,Y:3.55f]}"
 }
 
-### 共有情報登録処理
+### クリエイトステージデータ消去処理
 POST http://localhost:8000/api/stages/create/destroy
 Content-Type: application/json
 Accept: application/json
 
 {
-    "stage_id": 2
+    "stage_id": 7
 }
