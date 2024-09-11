@@ -18,6 +18,7 @@ class CreateStageInfoResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'user_id' => $this->user_id,
+            'user_name' => $this->user_name,
             'good_vol' => $this->good_vol,
         ];
     }

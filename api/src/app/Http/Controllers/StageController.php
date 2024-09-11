@@ -106,7 +106,11 @@ class StageController extends Controller
         $follow = $user->follows;                       // フォロー情報を取得
         $followsID = $follow->pluck('id')->toArray();   // フォローユーザーのIDを取得
         // ステージ情報取得
-        $stages = CreateStage::whereIn('user_id', $followsID)->get();
+        $stages = CreateStage::select('create_stages.id as id', 'create_stages.name as name',
+            'create_stages.user_id as user_id', 'users.name as user_name', 'create_stages.good_vol as good_vol')
+            ->whereIn('user_id', $followsID)
+            ->join('users', 'users.id', '=', 'create_stages.user_id')
+            ->get();
 
         return response()->json(CreateStageInfoResource::collection($stages));
     }
