@@ -147,10 +147,10 @@ class StageController extends Controller
         $share = ShareInfo::select('stage_id')
             ->whereIn('user_id', $followsID)->groupBy('stage_id')->take(30)->get();
         $stagesID = $share->pluck('stage_id')->toArray();  // 配列に変換
-        
+
         $stages = CreateStage::select('create_stages.id as id', 'create_stages.name as name',
             'create_stages.user_id as user_id', 'users.name as user_name', 'create_stages.good_vol as good_vol')
-            ->whereIn('id', $stagesID)
+            ->whereIn('create_stages.id', $stagesID)
             ->join('users', 'users.id', '=', 'create_stages.user_id')
             ->get();
 
