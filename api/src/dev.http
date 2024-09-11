@@ -43,7 +43,7 @@ GET http://localhost:8000/api/stages/create/user/1
 Accept: application/json
 
 ### フォローユーザーのクリエイトステージを取得
-GET http://localhost:8000/api/stages/create/follow/2
+GET http://localhost:8000/api/stages/create/follow/1
 Accept: application/json
 
 ### イイネが多い順で30件取得

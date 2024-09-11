@@ -7,6 +7,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CreateStageInfoResource;
 use App\Http\Resources\CreateStageResource;
 use App\Http\Resources\NormalStageResource;
 use App\Models\CreateStage;
@@ -93,7 +94,7 @@ class StageController extends Controller
         // ステージ情報取得
         $stages = CreateStage::where('user_id', "=", $request->user_id)->get();
 
-        return response()->json(CreateStageResource::collection($stages));
+        return response()->json(CreateStageInfoResource::collection($stages));
     }
 
     //-------------------------------
@@ -107,7 +108,7 @@ class StageController extends Controller
         // ステージ情報取得
         $stages = CreateStage::whereIn('user_id', $followsID)->get();
 
-        return response()->json(CreateStageResource::collection($stages));
+        return response()->json(CreateStageInfoResource::collection($stages));
     }
 
     //--------------------------
@@ -117,7 +118,7 @@ class StageController extends Controller
         // 取得処理
         $stages = CreateStage::orderBy('good_vol', 'desc')->take(30)->get();
 
-        return response()->json(CreateStageResource::collection($stages));
+        return response()->json(CreateStageInfoResource::collection($stages));
     }
 
     //---------------------------------
@@ -137,7 +138,7 @@ class StageController extends Controller
         // ステージ情報を取得
         $stages = CreateStage::whereIn('id', $stagesID)->get();
 
-        return response()->json(CreateStageResource::collection($stages));
+        return response()->json(CreateStageInfoResource::collection($stages));
     }
 
     //---------------------------------
