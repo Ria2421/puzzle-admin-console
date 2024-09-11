@@ -92,7 +92,11 @@ class StageController extends Controller
     public function createUser(Request $request)
     {
         // ステージ情報取得
-        $stages = CreateStage::where('user_id', "=", $request->user_id)->get();
+        $stages = CreateStage::select('create_stages.id as id', 'create_stages.name as name',
+            'create_stages.user_id as user_id', 'users.name as user_name', 'create_stages.good_vol as good_vol')
+            ->where('user_id', "=", $request->user_id)
+            ->join('users', 'users.id', '=', 'create_stages.user_id')
+            ->get();
 
         return response()->json(CreateStageInfoResource::collection($stages));
     }
@@ -119,8 +123,13 @@ class StageController extends Controller
     // イイネが多い順で30件取得
     public function getGood()
     {
-        // 取得処理
-        $stages = CreateStage::orderBy('good_vol', 'desc')->take(30)->get();
+        // ステージ情報取得
+        $stages = CreateStage::select('create_stages.id as id', 'create_stages.name as name',
+            'create_stages.user_id as user_id', 'users.name as user_name', 'create_stages.good_vol as good_vol')
+            ->join('users', 'users.id', '=', 'create_stages.user_id')
+            ->orderBy('good_vol', 'desc')
+            ->take(30)
+            ->get();
 
         return response()->json(CreateStageInfoResource::collection($stages));
     }
@@ -138,9 +147,12 @@ class StageController extends Controller
         $share = ShareInfo::select('stage_id')
             ->whereIn('user_id', $followsID)->groupBy('stage_id')->take(30)->get();
         $stagesID = $share->pluck('stage_id')->toArray();  // 配列に変換
-
-        // ステージ情報を取得
-        $stages = CreateStage::whereIn('id', $stagesID)->get();
+        
+        $stages = CreateStage::select('create_stages.id as id', 'create_stages.name as name',
+            'create_stages.user_id as user_id', 'users.name as user_name', 'create_stages.good_vol as good_vol')
+            ->whereIn('id', $stagesID)
+            ->join('users', 'users.id', '=', 'create_stages.user_id')
+            ->get();
 
         return response()->json(CreateStageInfoResource::collection($stages));
     }
