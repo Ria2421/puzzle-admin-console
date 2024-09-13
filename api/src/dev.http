@@ -15,7 +15,7 @@ GET http://localhost:8000/api/users/follows/1
 Accept: application/json
 
 ### 指定したユーザーIDのプロフィール情報を取得
-GET http://localhost:8000/api/users/summary/1
+GET http://localhost:8000/api/users/summary/8
 Accept: application/json
 
 ### 全アイテムのリスト取得
@@ -35,7 +35,7 @@ GET http://localhost:8000/api/stages/normal
 Accept: application/json
 
 ### 指定IDのクリエイトステージを取得
-GET http://localhost:8000/api/stages/create/1
+GET http://localhost:8000/api/stages/create/12
 Accept: application/json
 
 ### 指定ユーザーのクリエイトステージを取得

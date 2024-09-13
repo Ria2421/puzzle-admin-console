@@ -86,7 +86,7 @@ class UserController extends Controller
             if (isset($request->name)) {    // 名前
                 $user->name = $request->name;
             }
-            if (isset($request->level)) {   // アイコンID
+            if (isset($request->icon_id)) { // アイコンID
                 $user->icon_id = $request->icon_id;
             }
 
