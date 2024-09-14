@@ -93,7 +93,8 @@ class StageController extends Controller
     {
         // ステージ情報取得
         $stages = CreateStage::select('create_stages.id as id', 'create_stages.name as name',
-            'create_stages.user_id as user_id', 'users.name as user_name', 'create_stages.good_vol as good_vol')
+            'create_stages.user_id as user_id', 'users.icon_id as icon_id', 'users.name as user_name',
+            'create_stages.good_vol as good_vol')
             ->where('user_id', "=", $request->user_id)
             ->join('users', 'users.id', '=', 'create_stages.user_id')
             ->get();
@@ -111,7 +112,8 @@ class StageController extends Controller
         $followsID = $follow->pluck('id')->toArray();   // フォローユーザーのIDを取得
         // ステージ情報取得
         $stages = CreateStage::select('create_stages.id as id', 'create_stages.name as name',
-            'create_stages.user_id as user_id', 'users.name as user_name', 'create_stages.good_vol as good_vol')
+            'create_stages.user_id as user_id', 'users.icon_id as icon_id', 'users.name as user_name',
+            'create_stages.good_vol as good_vol')
             ->whereIn('user_id', $followsID)
             ->join('users', 'users.id', '=', 'create_stages.user_id')
             ->get();
@@ -125,7 +127,8 @@ class StageController extends Controller
     {
         // ステージ情報取得
         $stages = CreateStage::select('create_stages.id as id', 'create_stages.name as name',
-            'create_stages.user_id as user_id', 'users.name as user_name', 'create_stages.good_vol as good_vol')
+            'create_stages.user_id as user_id', 'users.icon_id as icon_id', 'users.name as user_name',
+            'create_stages.good_vol as good_vol')
             ->join('users', 'users.id', '=', 'create_stages.user_id')
             ->orderBy('good_vol', 'desc')
             ->take(30)
@@ -149,7 +152,8 @@ class StageController extends Controller
         $stagesID = $share->pluck('stage_id')->toArray();  // 配列に変換
 
         $stages = CreateStage::select('create_stages.id as id', 'create_stages.name as name',
-            'create_stages.user_id as user_id', 'users.name as user_name', 'create_stages.good_vol as good_vol')
+            'create_stages.user_id as user_id', 'users.icon_id as icon_id', 'users.name as user_name',
+            'create_stages.good_vol as good_vol')
             ->whereIn('create_stages.id', $stagesID)
             ->join('users', 'users.id', '=', 'create_stages.user_id')
             ->get();

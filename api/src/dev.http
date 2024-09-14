@@ -18,6 +18,10 @@ Accept: application/json
 GET http://localhost:8000/api/users/summary/8
 Accept: application/json
 
+### 指定したユーザーIDのプロフィール情報を取得
+GET https://api-shot.japaneast.cloudapp.azure.com/api/users/summary/20
+Accept: application/json
+
 ### 全アイテムのリスト取得
 GET http://localhost:8000/api/items/index
 Accept: application/json

@@ -125,6 +125,7 @@ class UserController extends Controller
             }
         }
 
+        $response['icon_id'] = $user->icon_id;          // ユーザーアイコンID
         $response['play_cnt'] = count($playData);       // プレイ回数
         $response['clear_cnt'] = $clearCnt;             // クリア回数
         $response['create_cnt'] = count($createData);   // ステージ作成回数
