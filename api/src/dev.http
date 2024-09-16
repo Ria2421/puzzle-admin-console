@@ -159,3 +159,13 @@ Accept: application/json
 {
     "stage_id": 7
 }
+
+### イイネ数更新
+POST http://localhost:8000/api/stages/update/good
+Content-Type: application/json
+Accept: application/json
+
+{
+    "id": 5,
+    "good_vol": 5
+}
