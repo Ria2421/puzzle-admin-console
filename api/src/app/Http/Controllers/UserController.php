@@ -148,8 +148,9 @@ class UserController extends Controller
 
         // フォローユーザーのIDを取り出す
         $follows_id = $follow->pluck('id')->toArray();
+        array_push($follows_id, $user->id);
 
-        // フォローID以外のユーザーデータをランダムに20件取得
+        // フォローID・自分以外のユーザーデータをランダムに20件取得
         $response = User::inRandomOrder()->whereNotIn('id', $follows_id, false)->take(20)->get();
 
         // ユーザーデータを返却
