@@ -87,8 +87,8 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "user_id": 5,
-    "follow_id": 6
+    "user_id": 1,
+    "follow_id": 2
 }
 
 ### フォロー解除処理
