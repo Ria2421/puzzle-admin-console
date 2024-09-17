@@ -136,6 +136,26 @@ class UserController extends Controller
         return response()->json($response);
     }
 
+    //------------------------------------------
+    // ランダムなユーザーデータを20件取得
+    public function random(Request $request)
+    {
+        // 指定IDのユーザーデータをJSON形式で返す
+        $user = User::findOrFail($request->user_id);
+
+        // フォローデータの取得
+        $follow = $user->follows;
+
+        // フォローユーザーのIDを取り出す
+        $follows_id = $follow->pluck('id')->toArray();
+
+        // フォローID以外のユーザーデータをランダムに20件取得
+        $response = User::inRandomOrder()->whereNotIn('id', $follows_id, false)->take(20)->get();
+
+        // ユーザーデータを返却
+        return response()->json(FollowResource::collection($response));
+    }
+
     //======================================================================
     // フォロー関連 =====================================
 

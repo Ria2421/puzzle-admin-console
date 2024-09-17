@@ -32,10 +32,13 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
     Route::post('users/store', [UserController::class, 'store'])->name('users.store');
     // ユーザー情報の更新
     Route::post('users/update', [UserController::class, 'update'])->name('users.update');
-    // 指定ユーザーIDのデータを取得
-    Route::get('users/{user_id}', [UserController::class, 'show'])->name('users.show');
     // 指定ユーザーIDのプロフィール情報を取得
     Route::get('users/summary/{user_id}', [UserController::class, 'getSummary'])->name('users.summary');
+    // ランダムなユーザーデータを20件取得
+    Route::get('users/random/{user_id}', [UserController::class, 'random'])->name('users.random');
+    // 指定ユーザーIDのデータを取得
+    Route::get('users/{user_id}', [UserController::class, 'show'])->name('users.show');
+
 
     //-----------------------------------------------------------------------------------------------
     // アイテム関連 ---------------

@@ -58,6 +58,10 @@ Accept: application/json
 GET http://localhost:8000/api/stages/create/share/2
 Accept: application/json
 
+### ランダム取得
+GET http://localhost:8000/api/users/random/3
+Accept: application/json
+
 ### ユーザー登録
 POST http://localhost:8000/api/users/store
 Content-Type: application/json
