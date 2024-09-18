@@ -38,8 +38,7 @@ Route::middleware(NoCacheMiddleware::class)->group(function () {
     Route::get('users/random/{user_id}', [UserController::class, 'random'])->name('users.random');
     // 指定ユーザーIDのデータを取得
     Route::get('users/{user_id}', [UserController::class, 'show'])->name('users.show');
-
-
+    
     //-----------------------------------------------------------------------------------------------
     // アイテム関連 ---------------
 

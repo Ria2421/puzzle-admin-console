@@ -15,10 +15,10 @@ return new class extends Migration {
     {
         Schema::create('play_logs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');     // プレイしたユーザID
-            $table->unsignedInteger('stage_id');    // プレイしたステージID
-            $table->unsignedInteger('stage_type');  // ステージタイプ(1.ノーマル 2.クリエイト)
-            $table->boolean('clear_flag');          // クリア判定(true:成功 false:失敗)
+            $table->unsignedInteger('user_id')->index();     // プレイしたユーザID
+            $table->unsignedInteger('stage_id')->index();    // プレイしたステージID
+            $table->unsignedInteger('stage_type');           // ステージタイプ(1.ノーマル 2.クリエイト)
+            $table->boolean('clear_flag');                   // クリア判定(true:成功 false:失敗)
             $table->timestamps();
 
             // 2つのidにインデックス設定

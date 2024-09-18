@@ -23,24 +23,24 @@ class DatabaseSeeder extends Seeder
     {
         // 引数のrunを実行
         $this->call(AccountsTableSeeder::class);
-        $this->call(UsersTableSeeder::class);
+        //$this->call(UsersTableSeeder::class);
         $this->call(ItemsTableSeeder::class);
-        $this->call(HaveItemsTableSeeder::class);
+        // $this->call(HaveItemsTableSeeder::class);
         $this->call(MailsTableSeeder::class);
         $this->call(SendItemsTableSeeder::class);
-        $this->call(ReceiveMailsSeeder::class);
-        $this->call(FollowsTableSeeder::class);
-        $this->call(FollowLogsSeeder::class);
-        $this->call(ItemLogsSeeder::class);
-        $this->call(MailLogsSeeder::class);
-        $this->call(GachasTableSeeder::class);
-        $this->call(GachaLogsTableSeeder::class);
-        $this->call(GachaEmissionItemsTableSeeder::class);
+        // $this->call(ReceiveMailsSeeder::class);
+        // $this->call(FollowsTableSeeder::class);
+        // $this->call(FollowLogsSeeder::class);
+        // $this->call(ItemLogsSeeder::class);
+        // $this->call(MailLogsSeeder::class);
+        // $this->call(GachasTableSeeder::class);
+        // $this->call(GachaLogsTableSeeder::class);
+        // $this->call(GachaEmissionItemsTableSeeder::class);
         $this->call(AchievementsTableSeeder::class);
-        $this->call(AchievementProgressTableSeeder::class);
-        $this->call(CreateStagesTableSeeder::class);
+        // $this->call(AchievementProgressTableSeeder::class);
+        // $this->call(CreateStagesTableSeeder::class);
         $this->call(NormalStagesTableSeeder::class);
-        $this->call(PlayLogsTableSeeder::class);
-        $this->call(ShareInfosTableSeeder::class);
+        // $this->call(PlayLogsTableSeeder::class);
+        // $this->call(ShareInfosTableSeeder::class);
     }
 }

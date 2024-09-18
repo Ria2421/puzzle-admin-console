@@ -18,7 +18,6 @@ return new class extends Migration {
             $table->string('name', 128);    // ユーザー名 (最大文字数32)
             $table->integer('icon_id');           // アイコン画像ID(デフォが1)
             $table->timestamps();
-            $table->unique('name');     // nameにユニーク制約設定
         });
     }
 

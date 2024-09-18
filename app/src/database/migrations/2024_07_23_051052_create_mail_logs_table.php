@@ -15,7 +15,7 @@ return new class extends Migration {
     {
         Schema::create('mail_logs', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');         // 対象のユーザーID
+            $table->integer('user_id')->index();// 対象のユーザーID
             $table->integer('mail_id');         // 操作したメールID
             $table->integer('send_item_id');    // メール添付アイテムID
             $table->integer('action');          // 操作内容 [1:受信 2:開封]

@@ -48,7 +48,7 @@ class StageController extends Controller
         PlayLog::create([
             'user_id' => $request->user_id,
             'stage_id' => $request->stage_id,
-            'stage_type' => $request->stage_type,
+            'stage_type' => $request->stage_type,   // [1:ノーマル 2:クリエイト]
             'clear_flag' => $request->clear_flag
         ]);
         // 完了ステータスを送信(クライアントには空の連想配列が渡る)

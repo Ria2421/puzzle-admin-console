@@ -122,18 +122,6 @@ Accept: application/json
     "mail_id": 2
 }
 
-### プレイログの登録
-POST http://localhost:8000/api/stages/store/result
-Content-Type: application/json
-Accept: application/json
-
-{
-    "user_id": 50,
-    "stage_id": 2,
-    "stage_type": 1,
-    "clear_flag": true
-}
-
 ### 共有情報登録処理
 POST http://localhost:8000/api/stages/share
 Content-Type: application/json
@@ -172,4 +160,16 @@ Accept: application/json
 {
     "id": 5,
     "good_vol": 5
+}
+
+### プレイログの登録
+POST http://localhost:8000/api/stages/store/result
+Content-Type: application/json
+Accept: application/json
+
+{
+    "user_id": 50,
+    "stage_id": 2,
+    "stage_type": 1,
+    "clear_flag": true
 }

@@ -15,8 +15,8 @@ return new class extends Migration {
     {
         Schema::create('share_infos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');     // 共有したユーザーID
-            $table->unsignedInteger('stage_id');    // 共有されたステージID
+            $table->unsignedInteger('user_id')->index();     // 共有したユーザーID
+            $table->unsignedInteger('stage_id');             // 共有されたステージID
             $table->timestamps();
         });
     }
