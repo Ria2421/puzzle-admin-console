@@ -15,7 +15,15 @@ class NormalStagesTableSeeder extends Seeder
 {
     public function run(): void
     {
-        NormalStage::create(["item_id" => 1, "quantity" => 5]);
-        NormalStage::create(["item_id" => 2, "quantity" => 5]);
+        NormalStage::create(["item_id" => 1, "quantity" => 1]);
+        NormalStage::create(["item_id" => 1, "quantity" => 1]);
+        NormalStage::create(["item_id" => 1, "quantity" => 1]);
+        NormalStage::create(["item_id" => 1, "quantity" => 1]);
+        NormalStage::create(["item_id" => 1, "quantity" => 1]);
+        NormalStage::create(["item_id" => 1, "quantity" => 1]);
+        NormalStage::create(["item_id" => 1, "quantity" => 1]);
+        NormalStage::create(["item_id" => 1, "quantity" => 1]);
+        NormalStage::create(["item_id" => 1, "quantity" => 1]);
+        NormalStage::create(["item_id" => 1, "quantity" => 1]);
     }
 }

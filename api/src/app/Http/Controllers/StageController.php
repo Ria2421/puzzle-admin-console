@@ -36,7 +36,7 @@ class StageController extends Controller
         $validator = Validator::make($request->all(), [
             'user_id' => ['required', 'int'],
             'stage_id' => ['required', 'int'],
-            'stage_type' => ['required', 'int'],
+            'stage_type' => ['required', 'int'],    // [1:ノーマル 2:クリエイト]
             'clear_flag' => ['required', 'bool'],
         ]);
         if ($validator->fails()) {
@@ -48,7 +48,7 @@ class StageController extends Controller
         PlayLog::create([
             'user_id' => $request->user_id,
             'stage_id' => $request->stage_id,
-            'stage_type' => $request->stage_type,   // [1:ノーマル 2:クリエイト]
+            'stage_type' => $request->stage_type,
             'clear_flag' => $request->clear_flag
         ]);
         // 完了ステータスを送信(クライアントには空の連想配列が渡る)
@@ -74,6 +74,7 @@ class StageController extends Controller
             'user_id' => $request->user_id,
             'stage_id' => $request->stage_id,
         ]);
+        
         // 完了ステータスを送信(クライアントには空の連想配列が渡る)
         return response()->json();
     }
@@ -146,7 +147,7 @@ class StageController extends Controller
         $follow = $user->follows;                       // フォロー情報を取得
         $followsID = $follow->pluck('id')->toArray();   // フォローユーザーのIDを取得
 
-        // ステージID一覧を取得
+        // フォローの共有したステージID一覧を取得
         $share = ShareInfo::select('stage_id')
             ->whereIn('user_id', $followsID)->groupBy('stage_id')->take(30)->get();
         $stagesID = $share->pluck('stage_id')->toArray();  // 配列に変換
