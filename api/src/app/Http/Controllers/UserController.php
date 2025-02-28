@@ -57,8 +57,13 @@ class UserController extends Controller
             'icon_id' => 1,
         ]);
 
-        // クライアント側に自分のIDを送る
-        return response()->json(['user_id' => $user->id]);
+        // APIトークンを発行する
+        $token = $user->createToken($request->name)->plainTextToken;
+
+        // クライアント側に自分のIDとAPIトークンを送る
+
+
+mo        return response()->json(['user_id' => $user->id, 'token' => $token]);
     }
 
     //-----------------------

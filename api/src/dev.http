@@ -1,6 +1,7 @@
 ### ユーザー情報取得
-GET http://localhost:8000/api/users/1
+GET http://localhost:8000/api/users/2
 Accept: application/json
+Authorization: Bearer 5|3msODJmveyLNl0vEar7gZb1qjBsvrtstonJ6awiwc1a09e7f
 
 ### 指定範囲のレベル
 GET http://localhost:8000/api/users/index?min_level=5&max_level=25
@@ -68,7 +69,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "name": "jobi"
+    "name": "test"
 }
 
 ### ユーザー情報の更新
